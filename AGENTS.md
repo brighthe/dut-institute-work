@@ -1,7 +1,16 @@
 # AGENTS.md
 
-Codex / Antigravity 等 AI 助手在本仓库工作时，遵循与 Claude Code 同一套约定：
+本文件指导 **Codex、Antigravity 等非-Claude AI** 在 `dut-institute-work` 中工作。
 
-- 仓库定位、目录结构、边界与脱敏纪律见 [README.md](README.md)。
-- 工作规则（交流语言、内容纪律、单一事实来源约定）见 [CLAUDE.md](CLAUDE.md)。
-- Git 提交与推送规程见 [ai/common/git-workflow.md](ai/common/git-workflow.md)。
+## 必读入口
+
+在开始任务前，应先读取并遵守：
+
+1. [ai/context.md](ai/context.md)：所有 AI 共享的通用上下文——仓库定位、交流与写作约定、内容纪律、单一事实来源、跨仓库边界与隐私要求。
+2. 本文件：Codex / Antigravity 专用入口说明。
+
+## Codex / Antigravity 专用补充
+
+### 中文 Markdown 编码
+
+编辑中文文档时保持 UTF-8；使用 PowerShell 整体读写文件时必须显式指定 `-Encoding UTF8`，修改后检查乱码和 Mojibake。
