@@ -12,5 +12,8 @@
 ## 相关链接
 
 - 阶段计划的来源讨论：[meetings/2026-07-09-stage-plan-discussion.md](../meetings/2026-07-09-stage-plan-discussion.md)
+- 与杜阳老师的落地路径讨论：[meetings/2026-07-20-duyang-discussion.md](../meetings/2026-07-20-duyang-discussion.md)
+- 算海内部周会与任务分工：[meetings/2026-07-20-suanhai-internal-weekly.md](../meetings/2026-07-20-suanhai-internal-weekly.md)
+- 算海项目过程仓（内部，任务 issues 与产出沉淀）：`suanhaitech/houzai`
 - 沟通上下文（李宁宁、陈玉震等老师的档案与聊天记录）：`heliangos/wechat/dalian-university-of-technology-postdoc/`
 - 相关技术知识沉淀（matrix-free、PIML 方向调研）：`dut-postdoc/research/postdoc-plan/long-term/direction-1-piml-matrix-free/`
