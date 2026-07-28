@@ -11,3 +11,12 @@ Thumbs.db
 *.tmp
 *.tmp.*
 *~
+
+# 尚未获公开再分发授权的项目交付物
+*.exe
+*.zip
+*.docx
+/private/
+
+# 仅供本机使用的内部接入操作记录
+/hpc/dev-access.md
