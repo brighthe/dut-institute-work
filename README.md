@@ -17,24 +17,16 @@
 
 ```
 dut-institute-work/
-├── README.md                # 本说明：定位、内容去向、目录结构
-├── CLAUDE.md                # Claude Code 根入口（自动加载共享上下文）
-├── AGENTS.md                # Codex / Antigravity 等 AI 的根入口
-├── ai/                      # 工具无关的 AI 规则，文件直接平铺在本层
-│   ├── context.md           # 所有 AI 共享工作规则的唯一来源
-│   └── git-workflow.md      # 本仓库特有的提交与推送纪律
-├── hpc/                     # 任务线：HPC 求解器性能与多后端并行（当前唯一任务线）
-│   ├── README.md            # 任务线概况与文件索引
-│   ├── plan.md              # 工作安排与任务拆解（单一事实来源）
-│   ├── log.md               # 进度日志（append-only）
-│   └── artifacts.md         # 交付物清单、版本与归档状态
-├── reports/                 # 项目报告
-│   ├── README.md            # 报告类型与内容边界
-│   └── daily/               # 项目日报，按 YYYY-MM-DD.md 命名
-│       ├── README.md        # 日报规则与倒序索引
-│       └── template.md      # 日报模板
-└── meetings/                # 会议与讨论纪要，按 YYYY-MM-DD-主题.md 命名
+├── README.md      # 本说明：定位、内容去向、目录结构
+├── CLAUDE.md      # Claude Code 根入口（自动加载共享上下文）
+├── AGENTS.md      # Codex / Antigravity 等 AI 的根入口
+├── ai/            # 工具无关的 AI 规则：context.md（工作纪律）、git-workflow.md（提交纪律）
+├── hpc/           # 任务线：HPC 求解器性能与多后端并行（当前唯一任务线）
+├── reports/       # 项目报告：日报及后续可能的双周、阶段汇报
+└── meetings/      # 会议与讨论纪要，按 YYYY-MM-DD-主题.md 命名
 ```
+
+每个文件夹内的文件清单与写作规则由该文件夹的 README 维护，本树不逐个复述：任务线看 [hpc/README.md](hpc/README.md)，报告看 [reports/README.md](reports/README.md)。
 
 将来研究院分派新的任务线，在根目录按 `hpc/` 的同构方式新开一个文件夹，并在本 README 登记。
 
