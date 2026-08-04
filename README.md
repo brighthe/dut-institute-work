@@ -8,6 +8,7 @@
 | --- | --- |
 | 项目任务、安排、分工、进度、汇报节点、日报、自有项目文档与交付物清单 | 本仓库 |
 | 从工作中沉淀的可复用知识（matrix-free 方法、PETSc 调优经验、文献） | `dut-postdoc` |
+| 大工项目相关飞书群聊原文 | 本仓库 `chats/`；项目结论仍进 `hpc/` |
 | 与老师们的微信沟通原文与联系人上下文 | `heliangos/wechat`；本仓记录项目结论与指针 |
 | 算海团队执行任务与内部产出 | `suanhaitech/houzai`；本仓记录项目状态与指针 |
 | 研究院提供的源码、程序包、模型与内部文档原件 | 研究院 GitLab；本仓记录交付物清单与归档状态 |
@@ -23,10 +24,11 @@ dut-institute-work/
 ├── ai/            # 工具无关的 AI 规则：context.md（工作纪律）、git-workflow.md（提交纪律）
 ├── hpc/           # 任务线：HPC 求解器性能与多后端并行（当前唯一任务线）
 ├── reports/       # 项目报告：日报及后续可能的双周、阶段汇报
-└── meetings/      # 会议与讨论纪要，按 YYYY-MM-DD-主题.md 命名
+├── meetings/      # 会议与讨论纪要，按 YYYY-MM-DD-主题.md 命名
+└── chats/         # 飞书群聊原文归档，一群一文件长期累积
 ```
 
-每个文件夹内的文件清单与写作规则由该文件夹的 README 维护，本树不逐个复述：任务线看 [hpc/README.md](hpc/README.md)，报告看 [reports/README.md](reports/README.md)。
+每个文件夹内的文件清单与写作规则由该文件夹的 README 维护，本树不逐个复述：任务线看 [hpc/README.md](hpc/README.md)，报告看 [reports/README.md](reports/README.md)，群聊原文看 [chats/README.md](chats/README.md)。
 
 将来研究院分派新的任务线，在根目录按 `hpc/` 的同构方式新开一个文件夹，并在本 README 登记。
 
