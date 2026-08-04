@@ -9,6 +9,10 @@
 | [plan.md](plan.md) | 工作安排与任务拆解（**单一事实来源**，更新安排只改这里） |
 | [log.md](log.md) | 进度日志（append-only，新条目加在最上面） |
 | [artifacts.md](artifacts.md) | 交付物清单、版本、用途与归档状态 |
+| [environment.md](environment.md) | 项目级环境事实、ABI 约束与已验证边界（接入细节见本地 `dev-access.md`） |
+| [build-and-run.md](build-and-run.md) | WSL 唯一操作手册：三仓库同步、环境准备、增量编译、源码验证、PETSc/Hypre 切换与 Artifact 对照 |
+| [quick-commands.md](quick-commands.md) | 命令卡：高频命令与红线，贴墙速查 |
+| [development-workflow.md](development-workflow.md) | WSL/C++ 开发流程：概念、分支、测试、调试与分阶段检查表 |
 
 ## 相关链接
 
