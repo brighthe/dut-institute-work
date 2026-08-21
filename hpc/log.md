@@ -2,6 +2,17 @@
 
 > Append-only：新条目加在最上面，格式 `## [YYYY-MM-DD] <简述>`；只增不改历史条目。
 
+## [2026-08-21] WSL 一直隐性依赖 TUN；补齐后 TUN 才真正可以常关
+
+承接同日上一条。上一条写「既然 TUN 可以常关」时，尚未发现 **WSL2 也在暗中依赖 TUN**，该结论当时并不完整，以本条为准。
+
+- **被掩盖的依赖**：本机 `.wslconfig` 设 `networkingMode=nat`，WSL 出站流量由宿主 NAT 转发、走**宿主路由表**。TUN 常开期间，这些流量进 TUN 网卡被透明代理，因此 WSL 内**从未配置过任何代理变量却一直能访问外网**。TUN 一关，这条通道随之消失，而 WSL 侧没有任何显式配置兜底——症状是 VS Code Remote-WSL 里的 Claude Code 插件反复报 `403 Request not allowed`（请求以国内出口 IP 直连，被区域拦截；403 ≠ 未登录，但连续 403 会把会话弄失效，随后叠加显示 `Please run /login`）。
+- **为何只有该插件受影响**：Remote-WSL 的 server 启动参数含 `--use-host-proxy` / `--useHostProxy=true`，VS Code **自身**的网络栈经隧道借用 Windows 代理，故扩展市场、更新等一切正常；而插件拉起的请求走 WSL 本地网络栈，不吃这个参数。这是「同一个窗口里只有一个组件连不上」的原因。
+- **排除的错误假设**：期间一次 `SSL_ERROR_SYSCALL`（curl exit 35）曾被怀疑是 SNI 阻断或 PMTU 黑洞，脚本化复测后两者均不成立——经代理的 HTTPS 逐站全部成功，`api.anthropic.com` 稳定返回 405（405 表示请求已抵达 Anthropic，仅方法不符）；MTU 1280 下 payload 1200 通过、1400 失败，与设定一致，非黑洞。**该 SSL 错误是瞬时抖动，不可复现，勿据以推断**。
+- **处置**：在两个发行版的 `~/.bashrc` 中写入代理块，位置在 Ubuntu 默认的「非交互 shell 提前 return」守卫**之前**——因为 `~/.profile` 对 bash login shell 无条件 source `~/.bashrc`，放在守卫前才能让 `bash -lc`（即 VS Code 解析 shell 环境所用形式）与扩展宿主这类**非交互进程**继承到。要点四条：① 用无条件 `export`，不要写成需手工调用的 shell 函数；② 网关 IP 每次 WSL 重启可能变化，须用 `ip route show default` **动态取**，不可写死；③ 大小写两套变量都设，部分工具只读其一；④ **必须带 `no_proxy`**（含内网域名后缀），否则内网请求会被送去境外节点，即本日志此前记过的那类 502。
+- **验证**：改配置后原 server 进程不会继承，需终止 `vscode-server` 并重开窗口。以时间戳与 `/proc/<pid>/environ` 实证——旧 extensionHost 启动于 14:48:31、配置改于 14:52:19，其 environ 内 proxy 变量为 0；重开后的 extensionHost（14:55:11）8 个变量齐全，且用**其自身环境**访问 `api.anthropic.com` 返回 405。
+- **规范结论**：TUN 是路由层兜底手段，只应留给确实无法配置代理的程序（闭源硬编码直连、纯 UDP 等）临时使用，不应常开。常开的代价是掩盖真实配置缺失、使流量走向不再由程序自身配置决定从而无法从应用侧排查（Antigravity 与 WSL 两例皆是），且在本机与 VPN 硬冲突、并使 `no_proxy` 类绕过控制失效。**显式两层配置**——浏览器/Electron 走系统代理、CLI 与 Go/Python 走环境变量、WSL 归入后者——是常态形态。至此本机最后一处隐性依赖已转为显式配置，TUN 可以常关。
+
 ## [2026-08-21] 「Antigravity 必须开 Clash TUN」是误判；根因是代理环境变量从未持久化
 
 - **结论：Antigravity 不需要开虚拟网卡模式（TUN）**。它的语言服务器 `language_server.exe` / `language_server_windows_x64.exe` 是 Go 二进制（二进制内命中 `net/http` 与 `HTTP_PROXY`/`https_proxy`/`no_proxy`），走 `http.ProxyFromEnvironment`——**只认代理环境变量，不认 Windows 系统代理（WinINET）**。其扩展未贡献任何 `*.proxy` 设置项，`settings.json` 里的 `http.proxy` 只作用于 Electron 外壳。
