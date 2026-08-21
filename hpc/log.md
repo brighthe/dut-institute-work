@@ -2,6 +2,16 @@
 
 > Append-only：新条目加在最上面，格式 `## [YYYY-MM-DD] <简述>`；只增不改历史条目。
 
+## [2026-08-21] 「Antigravity 必须开 Clash TUN」是误判；根因是代理环境变量从未持久化
+
+- **结论：Antigravity 不需要开虚拟网卡模式（TUN）**。它的语言服务器 `language_server.exe` / `language_server_windows_x64.exe` 是 Go 二进制（二进制内命中 `net/http` 与 `HTTP_PROXY`/`https_proxy`/`no_proxy`），走 `http.ProxyFromEnvironment`——**只认代理环境变量，不认 Windows 系统代理（WinINET）**。其扩展未贡献任何 `*.proxy` 设置项，`settings.json` 里的 `http.proxy` 只作用于 Electron 外壳。
+- **根因：用户级持久环境变量里只有 `NO_PROXY`，没有 `HTTP_PROXY`/`HTTPS_PROXY`**。机器级环境变量与两个 PowerShell profile 均无 proxy 相关项。此前在终端里之所以「看起来有」，是 Claude Code 自行注入给子 shell 的——其进程由 Explorer 拉起，本身只能继承到用户级环境，注入的变量出了该进程即失效。而 `NO_PROXY` 是当初修内网 GitLab 502 时加的：那次的需求是「把内网排除掉」而非「指定代理在哪」，所以只加了排除项。
+- **为什么恰好卡住 Antigravity**：系统代理覆盖浏览器与 Electron 外壳，环境变量覆盖终端内启动的进程；「从开始菜单启动的 GUI 应用，且核心子进程是只认环境变量的 Go 二进制」这一类两边都够不着。Antigravity 是本机第一个落进该缝隙的程序，因此该缺口此前一直不显形。
+- **处置与验证**：在用户级持久化 `HTTP_PROXY` / `HTTPS_PROXY` 指向本机代理端口 `http://127.0.0.1:7897`（`NO_PROXY` 已含内网域名，无需改动），然后完全退出并重启 Antigravity。实测在 **TUN 关闭、VPN 断开、默认路由只剩物理网卡**的干净状态下，语言服务器的 10 条 ESTABLISHED 连接全部指向 `127.0.0.1:7897`，0 条直连；重启前则是直连 Google 地址、无一条走代理。环境变量改动必须完全重启目标应用才生效。
+- **更正 TUN 抢占默认路由的机制描述**：本机 Clash Verge 的 TUN 网卡（`Meta`）加的是 **`0.0.0.0/0`、RouteMetric 0**，不是常见的 `0.0.0.0/1 + 128.0.0.0/1` 分割路由。所以它压过 VPN 默认路由靠的是 **metric 更低，而不是前缀更长**——此前按「前缀更长」给出的解释不准确，以本条为准。修复方向不受影响：给内网网段补**明细路由**仍然稳赢，因为明细前缀长于 `0.0.0.0/0`，与 metric 无关。
+- **TUN 与 VPN 冲突的其余实测事实**：VPN 为全隧道且**不下发任何内网明细路由**，内网仅靠默认路由可达，故 TUN 一开内网即全断；而 VPN 服务器的 `/32` 主机路由由 Windows RAS 自动维护、始终走物理网卡，隧道本身不会断——症状表现为「VPN 显示已连接但内网打不开」，容易误判成掉线。另需注意 TUN 模式下 `NO_PROXY` 与系统代理绕过列表**完全失效**（TUN 工作在路由层，应用根本不知道有代理），[environment.md](environment.md) 3.1 记录的两层绕过配置仅对系统代理模式有效。
+- **后续**：既然 TUN 可以常关，VPN 与 Antigravity 不再冲突，按需切换即可满足日常使用。若今后需要内网与外网代理同时可用，仍需把 VPN 改为分流并补内网明细路由；该方案连同本机具体网段、服务器地址等参数一并见本地未入库的 `dev-access.md` 5.1，**不进入本 Public 仓库**。
+
 ## [2026-08-04] Hypre KSP 最小闭环走通；env 脚本补 Intel MPI include 路径
 
 - **Hypre 最小闭环在本机源码构建走通**：切换机制与 PETSc（8.2）完全相同——`Resource/cmake/SGConfig.cmake` 的 `SGSIM_LINEAR_REAL_SOLVER` 改为 `THypreKsp<Real_t>`，`source ~/sgsim-env.sh` 后重配 `build/petsc-minimal` + 编译，运行 `celas2.bdf`。输出：`Selected linear solver for real-valued problems: THypreKsp<Real_t>`、`Attempting to create linear solver of type: THypreKsp<Real_t>`、`Iterations = 1`、`Job celas2_hypre Finish (0.478 s)`、退出码 `0`、`.h5` 564 KB。验证后已恢复 `SGConfig.cmake` 默认。完整步骤见 [build-and-run.md](build-and-run.md) 8.3。
