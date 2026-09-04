@@ -6,6 +6,7 @@ Thumbs.db
 .obsidian/
 .vscode/
 .idea/
+.claude/settings.local.json
 
 # 临时文件
 *.tmp
