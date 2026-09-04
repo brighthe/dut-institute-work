@@ -45,7 +45,7 @@
   | Windows | `6944b27` | `e6eff53` | `ea03f9e6` | 历史构建与试算验证 |
   | WSL Ubuntu 22.04 | `98038b6` | `08d3cfa` | `b0b6f19` | 当前源码开发环境基线（2026-08-04 迁移并复核） |
 
-  正式性能数据必须在 Linux 目标机记录当次实际源码、Artifact、ThirdParty 和硬件基线。13 个子模块未开放源码是正常交付状态，其头文件和库由 Artifact 提供；内部仓库路径与克隆命令不进入本 Public 仓库。
+  正式性能数据必须在 Linux 目标机记录当次实际源码、Artifact、ThirdParty 和硬件基线。10 个子模块未开放源码是正常交付状态，其头文件和库由 Artifact 提供（2026-08-21 SuanHai fork 后 `Algebra`、`DBManager`、`Partition` 三个已开放，访问矩阵见 [gitlab-migration.md](gitlab-migration.md)）；内部仓库路径与克隆命令不进入本 Public 仓库。
 - [x] **过渡方案：先取得调试程序包**。在源码开放前先使用不含源码的调试程序、配套手册和算例模型熟悉程序并开展性能摸底；公开交付状态见 [artifacts.md](artifacts.md)，对应内部任务由算海项目过程仓维护。
 
 ### 2. 性能专项

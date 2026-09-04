@@ -13,7 +13,7 @@
 | [build-and-run.md](build-and-run.md) | WSL 唯一操作手册：三仓库同步、环境准备、增量编译、源码验证、PETSc/Hypre 切换与 Artifact 对照 |
 | [quick-commands.md](quick-commands.md) | 命令卡：高频命令与红线，贴墙速查 |
 | [development-workflow.md](development-workflow.md) | WSL/C++ 开发流程：概念、分支、测试、调试与分阶段检查表 |
-| [sgsim-architecture-sgpsolver.md](sgsim-architecture-sgpsolver.md) | SGSim 架构、线性静力求解流程、已核验能力与权限边界、自定义求解器 SGPSolver 设计 |
+| [gitlab-migration.md](gitlab-migration.md) | 代码迁入研究院 GitLab：仓库与子模块的访问权限范围、源码可见性边界 |
 
 ## 相关链接
 

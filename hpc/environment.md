@@ -63,7 +63,9 @@ Artifact 自带 `libmpi.so.12.0.0` 与 Intel 2021.14 的 SHA-256 和 Build ID �
 | MPI wrappers | `/opt/intel/oneapi/mpi/2021.14/bin/mpicc`、`mpicxx` |
 | MPI runtime | `/opt/intel/oneapi/mpi/2021.14/lib/libmpi.so.12` |
 
-源码树中的 `Algebra` 等模块为空，因此构建仍需只读引用 Artifact 的头文件和库。本机 preset 显式提供这些后备路径，不修改公共 preset，也不需要执行 `cmake --install`。
+源码树中的多数子模块目录为空，因此构建仍需只读引用 Artifact 的头文件和库。本机 preset 显式提供这些后备路径，不修改公共 preset，也不需要执行 `cmake --install`。
+
+> **2026-08-21 fork 后新增的构建陷阱**：`Resource/cmake/Tools.cmake` 的 `add_subdir` 宏以「子目录下是否存在 `CMakeLists.txt`」决定走源码还是预编译，这是一个隐式开关。`Algebra`、`DBManager`、`Partition` 一旦 init 出源码，构建即从「引用 Artifact 预编译库」切换为「源码编译」，而 Artifact 只发布运行期 `.so`，不含 PETSc/SLEPc/HYPRE/ARPACK 的头文件与 CMake 配置，本机不具备源码编译这三个模块的条件。**该判断基于依赖清点，重新配置尚未实测。**若要沿用原有预编译构建线，需先 `git submodule deinit` 这三个目录。
 
 **运行时求解器选择**：`SG_USE_PETSC=ON` 只控制编译链接；顶层求解器由 `Resource/cmake/SGConfig.cmake` 的 `SGSIM_LINEAR_REAL_SOLVER` 决定（默认 `CPardiso<Real_t>`，可切 `TPetscKsp<Real_t>` / `THypreKsp<Real_t>`），配置时写入各构建目录 `bin/solver.conf`。本机 preset 继承链自带 `SG_USE_PETSC=ON`，独立 PETSc 构建用 `-B build/petsc-minimal` 指定目录即可，避免污染默认基线 `build/intelmpi-debug`。切换与恢复步骤见 [build-and-run.md](build-and-run.md) 8.2。
 
@@ -93,13 +95,19 @@ WSL 中 Intel MPI 默认尝试 OFI，而本机没有可用的 libfabric provider
 
 VPN、GitLab 账号和任务仓库权限均已开通。内网 GitLab 在浏览器、Windows 命令行和 WSL 中均验证可达。
 
-本机 Clash Verge 曾将内网域名代理到外部节点产生 502，需同时覆盖系统代理绕过列表（浏览器）与 `NO_PROXY`（命令行）两层。具体地址与配置由机器级文档和本地 `dev-access.md` 维护。
+本机 Clash Verge 曾将内网域名代理到外部节点产生 502，需同时覆盖系统代理绕过列表（浏览器）与 `NO_PROXY`（命令行）两层。机器级的代理机制、TUN 规范与排错方法见 `workstation:network/README.md`，本机具体地址与研究院特有配置见本地未入库的 `dev-access.md`。
 
 ### 3.2 SSH 与源码获取
 
 内网 GitLab 使用独立 SSH 密钥，公钥注册和 `ssh -T` 已验证；WSL 与 Windows 侧共享同一身份，一处吊销或到期会同时失效。三个任务仓库已经克隆；同步顺序和门禁见 [build-and-run.md](build-and-run.md) 第四节，已验证源码基线见 [plan.md](plan.md)。
 
-部分子模块未开放源码，空目录是正常交付状态；对应接口和预编译库由 Artifact 提供。无需递归修复子模块或申请这些目录的源码权限。
+**仓库访问范围**（2026-08-21 研究院 fork 到 `SuanHai` 分组）：主仓与 `Artifact` 转为可写，`Algebra`、`DBManager`、`Partition` 三个子模块新开放源码，`ThirdParty` 失去访问；原命名空间已全面撤权，旧路径均不可达，因此迁移是强制的，不是可选优化。**完整访问矩阵与对应的源码可见性结论见 [gitlab-migration.md](gitlab-migration.md)**，本文不重复。
+
+对本机环境的三点直接影响：
+
+- 其余 10 个子模块的空目录仍是正常交付状态，对应接口和预编译库由 Artifact 提供，无需递归修复或申请源码权限；
+- `ThirdParty` 在 SuanHai 分组下没有对应仓库，本机副本停留在撤权前的 `b0b6f19`（2026-05-19），无法再取更新；
+- 三个新开放模块 init 出源码后会改变构建模式，见 2.3。
 
 经 VPN 克隆速度较慢属于当前接入链路特征。拉内网仓库必须连接 VPN；大批量公网下载宜断开 VPN，避免全隧道路由显著降低速度。
 

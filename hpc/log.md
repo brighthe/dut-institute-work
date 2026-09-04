@@ -2,6 +2,49 @@
 
 > Append-only：新条目加在最上面，格式 `## [YYYY-MM-DD] <简述>`；只增不改历史条目。
 
+## [2026-08-30] 归档 8.29 算海内部讨论中与本任务线相关的结论
+
+- 9 月 4 日阶段进展沟通以既有成果规范化整理为主：`PARDISO`/`MUMPS` 对比、不收敛算例处理、性能基线按「精简主文档 + 完整支撑材料」两层重组（8-31 节点材料）；预处理器讲清设计/调用/效果与集成条件，不表述为已完成嵌入。
+- 异构并行 2026-09-30 前形成初步可执行方案并完成组内评审；阶段成果 9-4 前有组织迁入对方 GitLab；大规模算例已收到但浪潮节点未恢复，需主动同步状态。
+- 完整纪要与行动项见 [../meetings/2026-08-29-acceptance-prep-discussion.md](../meetings/2026-08-29-acceptance-prep-discussion.md)；同次会议的验收准备线内容归 [../structural-dynamics/](../structural-dynamics/README.md) 任务线，不在本文件记录。
+
+## [2026-08-25] SuanHai fork 开放三个子模块；更正「13 个子模块全部无权限」的结论
+
+- **仓库访问矩阵变化**（研究院 2026-08-21 fork 到 `SuanHai` 分组）：
+
+  | 对象 | fork 之前 | 现在 |
+  | --- | --- | --- |
+  | 主仓 `SGSim` | 只读 | **可写**（SuanHai fork） |
+  | `Artifact` | 只读 | **可写** |
+  | `Algebra` | 不可访问 | **可读可写**（新增） |
+  | `DBManager` | 不可访问 | **可读可写**（新增） |
+  | `Partition` | 不可访问 | **可读可写**（新增） |
+  | 其余 10 个子模块 | 不可访问 | 不可访问（不变） |
+  | `ThirdParty` | 只读 | **失去** |
+
+- **更正本文件 2026-07-29「环境搭建全流程完成，算例试算跑通」条目中「13 个子模块全部无访问权限…空目录即正确终态，无需申请」**：该结论在当时成立，现已被 fork 推翻——`Algebra`、`DBManager`、`Partition` 三个已开放且可写，空目录不再是这三个的正确终态。按 append-only 规则不改历史条目，以本条为准。其余 10 个子模块的空目录仍是正确终态，原结论对它们继续有效。
+- **实际机制是 `.gitmodules` 的 3 条 URL 改写**，不是整仓复制：13 条子模块 URL 中 `Algebra`（并从 `Utility` 子组挪到顶层）、`DBManager`、`Partition` 改指 `SuanHai`，其余 10 条原样保留。因此无需重新克隆，在既有工作副本上增量迁移即可。
+- **原命名空间已全面撤权**：主仓、`Artifact`、`ThirdParty` 及三个模块的旧路径均返回 “could not be found or you don't have permission to view it”，迁移是强制的。`ThirdParty` 在 SuanHai 下没有对应仓库，本机副本停留在 `b0b6f19`（2026-05-19），无法再取更新——该项在《模块权限开放申请及评审》中未被提及，疑为撤权时的连带影响，待向研究院确认。
+- **写权限已实测**：对五个仓执行 `git push --dry-run <remote> HEAD:refs/heads/perm-probe-tmp`，均返回 `* [new branch]`；事后 `ls-remote` 确认探测分支未被创建。同一命令对旧路径返回权限拒绝，说明该探测确实触发了服务端授权检查，不是假阳性。**但 `--dry-run` 不发送 pack，pre-receive 钩子不执行，因此这只证明项目级写权限，未验证 `dev` 的分支保护与 MR 规则。**
+- 开放范围与《模块权限开放申请及评审》的结论逐条一致：`Partition`、`DBManager`、`Algebra` 拟同意者均已开放，`Import`、`SolverTask`/`SGFem/Task` 拟暂缓者均未开放。
+- **常驻位置**：本条只作时间线记录。访问矩阵与源码可见性结论的事实源是 [gitlab-migration.md](gitlab-migration.md)；对本机克隆与构建的影响见 [environment.md](environment.md) 3.2 与 2.3。该文件原有的架构分析与 SGPSolver 设计正文形成于 fork 之前，已随本次整理移除，需要时从 Git 历史取回。
+
+## [2026-08-24] 归档《受控使用 AI 方案》讨论稿 v0.2，回应陈院长的 AI 使用关切
+
+- 针对此前讨论中陈院长提出的 AI 使用问题，项目组拟定《大连理工项目受控使用 AI 方案》对外讨论稿（v0.2），全文归档于 [staging/controlled-ai-use-plan.md](../staging/controlled-ai-use-plan.md)（待确认讨论稿统一放 `drafts/`，定稿后再迁正式位置）。核心内容：数据三档分级（可交一般 AI / 仅受控环境 / 禁止上传线上公共 AI）、六步脱敏流程、本地部署 DeepSeek 系列模型 + DeepSeek Harness、对外交付人工审查。**该稿未经双方书面确认，最终以双方保密协议和书面确认结果为准**；经用户确认后存入本 Public 仓库，便于后续查阅。
+- 评审时确认 DeepSeek Harness 为 DeepSeek 官方开源的 agent harness（`deepseek-ai/deepseek-harness`，MIT，Node.js），当前处于 developer preview 阶段、官方声明会有兼容性破坏变更，方案中「正式名称和版本待双方核对」的标注应保留。
+- 评审遗留的待确认事项：① 会议录音与腾讯会议 AI 转写未纳入方案管控（08-14 双周会已在实际使用该通道）；② agent 型编程助手会自动读取整个仓库，与「最小必要信息」原则的冲突需明确处置方式（禁用、目录隔离或排除规则）；③ 第二档兜底条款「与合作方项目直接相关的技术材料」范围过宽，与第六节对外审查流程的衔接需限定；④「已批准的脱敏材料」由谁批准、如何批准未定义。
+
+## [2026-08-21] 更正：TLS 握手失败可复现且按域名聚集，属节点侧；新建 `workstation:network/` 模块
+
+- **更正同日上一条的错误论断**。上一条写「该 SSL 错误是瞬时抖动，**不可复现**，勿据以推断」——**不成立**。该判断建立在「逐站各测一次全部成功」的单次采样上，样本量不足以支持「不可复现」。改为多次采样后，失败稳定重现，且**按域名/子域聚集**。
+- **实测数据**（同一代理端口、同一时段、每个端点连续采样）：`github.com` 与 `www.googleapis.com` 全通；`daily-cloudcode-pa.googleapis.com` 6 次中通 4，`cloudcode-pa.googleapis.com` 6 次中通 3，`accounts.google.com` 6 次中通 0。**同一顶级域下不同子域成功率差异极大**，且 Windows 与 WSL 两侧表现一致。失败一律发生在 TLS 握手阶段。
+- **结论**：属**节点或分流规则侧**问题，与本地代理配置无关。判据是「同一代理、不同域名的成功率差异」——若是本地配置错误，所有域名应当一致失败；若是链路抖动，失败应当随机分布而非按域名聚集。
+- **一起被这条误判耽误的实例**：Antigravity IDE 报 `There was an unexpected issue setting up your account`，浏览器侧 OAuth 明明已显示认证成功。查 `auth.log` 才定位到真正失败的是 OAuth **之后**的 `POST .../v1internal:onboardUser`，报 `Client network socket disconnected before secure TLS connection was established`——正是上述握手失败，恰好连续两次撞上。**教训：这类错误信息（curl exit 35 / `SSL connection could not be established` / `unexpected EOF from the transport stream` / `socket disconnected before secure TLS`）都是同一现象的不同外衣，不要按字面分头归因，先做多次采样定性。**
+- **新建 `workstation:network/README.md`**，作为机器级网络与代理的唯一正文：三套代理机制及其盲区、TUN 只作兜底的规范与路由冲突机制、VPN 全隧道的路由与速率影响、WSL 侧代理配置、排错对照、以及上述「配置没生效 vs 节点不稳」的判定法。**动机是一次实打实的事故**：`workstation:wsl/README.md` 曾断言「宿主上只监听回环的代理端口在 WSL 里够不着」并标注「本机未验证」，而实测代理进程监听 `::`（全地址）、WSL 经默认网关完全可达——同日的修复正建立在这条被否定的结论之上。事实散落在三处且互不知情，是这类返工的结构性原因。
+- **本仓相应收缩为指针**：`dev-access.md` 5.4/5.5 的机制正文迁出，只留研究院接入相关部分与本机诊断命令；`environment.md` 3.1 中原先指向「机器级文档」这一不存在实体的指针，具体化为 `workstation:network/README.md`。**本机具体网段、服务器地址等参数仍只留在本地未入库的 `dev-access.md`，两个 Public 仓库均不写入。**
+- **另一处标注**：`dev-access.md` 5.1「连接 VPN 期间无法访问外网代理」出现反例（VPN 全隧道下代理仍返回 401、耗时 1.25s，属正常应答）。样本仅一次，不足以推翻，故只加「待复现确认」标注，结论未改。
+
 ## [2026-08-21] WSL 一直隐性依赖 TUN；补齐后 TUN 才真正可以常关
 
 承接同日上一条。上一条写「既然 TUN 可以常关」时，尚未发现 **WSL2 也在暗中依赖 TUN**，该结论当时并不完整，以本条为准。
