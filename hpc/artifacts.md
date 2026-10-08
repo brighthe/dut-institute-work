@@ -1,3 +1,14 @@
+---
+title: "HPC 交付物清单"
+type: artifacts
+task_line: hpc
+tags:
+  - hpc
+status: living
+date_added: 2026-07-28
+date_update: 2026-08-06
+---
+
 # HPC 交付物清单
 
 本文件统一记录大工 HPC 任务相关交付物的可公开状态。`dut-institute-work` 为 Public 仓库；未经权利方明确授权公开再分发的原件、精确文件名、文件指纹、内部路径与访问方式由受控内部系统承载，本文件只记录完成项目管理所需的最小元数据。用户明确授权时，可在清单中登记受控链接及登记时间；链接仅用于来源定位，不表示原件可公开访问或再分发。

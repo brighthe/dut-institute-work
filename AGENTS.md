@@ -1,16 +1,30 @@
-# AGENTS.md
+# 知识库协作规则
 
-本文件指导 **Codex、Antigravity 等非-Claude AI** 在 `dut-institute-work` 中工作。
+本文件是 `dut-institute-work` 的**工具无关常驻规则唯一来源**，Codex、Antigravity 等直接读取。[CLAUDE.md](CLAUDE.md) 只引用本文件，不含独立规则。
 
-## 必读入口
+## 定位与边界
 
-在开始任务前，应先读取并遵守：
+- 本仓库是**大工项目个人公开总档案**，按 [LLM Wiki](schema/llm-wiki-methodology.md) 模式维护。仓库定位与内容去向见 [README.md](README.md)，内容入口见 [index.md](index.md)。
+- 修改或新建页面前读取 [schema/page-schemas.md](schema/page-schemas.md)，按对应模板组织。页面结构、属性、索引与存储归属只在该规范维护，本文件不复述。
+- 原始资料（研究院 GitLab、飞书云文档、聊天流、相邻仓库）是最终事实来源，AI 只读、永不修改。
 
-1. [ai/context.md](ai/context.md)：所有 AI 共享的通用上下文——仓库定位、交流与写作约定、内容纪律、单一事实来源、跨仓库边界与公开发布要求。
-2. 本文件：Codex / Antigravity 专用入口说明。
+## 交流与写作
 
-## Codex / Antigravity 专用补充
+- 一律简体中文；代码、命令、方法名、变量与专有名词保留英文。
+- 结论注明来源，区分事实、推导与判断。
+- **不替用户编造**：任务安排、时间节点、他人说过的话只写有依据的内容；拿不准时标注「待确认」，不编造数据或引用。
+- 页面间使用相对 Markdown 链接（本仓为 Public 仓库，链接需在 GitHub 上可点击，不使用 Obsidian 双链）。跨仓库引用写成 `<仓库名>:<仓库内路径>`，不写机器绝对路径。
+- 中文 Markdown 保持 UTF-8；用 PowerShell 整体读写文件时显式指定 `-Encoding UTF8`，修改后检查乱码与 Mojibake。
 
-### 中文 Markdown 编码
+## 修改范围与授权
 
-编辑中文文档时保持 UTF-8；使用 PowerShell 整体读写文件时必须显式指定 `-Encoding UTF8`，修改后检查乱码和 Mojibake。
+- 只读查询可直接执行；有长期价值的回答**不自动授权回填页面**，写入须有用户授权。
+- **关联检查**：修改页面后主动检查它引用的页面（出链）与引用它的页面（入链），核对结论、口径与链接是否需要同步修改。发现需跨页改动时向用户明确提示，授权后执行；用户已明确授权的批量重组范围可直接修改。
+- **收尾说明边界**：报告本轮实际修改内容与关联检查范围；受限于上下文或未获授权而未检查的部分，如实说明「尚未检查」。
+
+## 导航与记录维护
+
+- 定位内容先读 [index.md](index.md)，进入内容目录先读该目录 `README.md`。
+- 页面入口变化时维护所属目录 `README.md`；全库入口变化时更新 `index.md`；目录结构、内容去向或 AI 架构变化时更新 `README.md`。
+- 任务线的进度、结论与交付物状态按 [schema/page-schemas.md](schema/page-schemas.md) §5 写入该任务线的 `plan.md` / `log.md` / `artifacts.md`。
+- 知识库自身的结构调整、规范变更与 Lint 结果追加到根 [log.md](log.md)；普通只读问答不记日志，历史条目不改写。

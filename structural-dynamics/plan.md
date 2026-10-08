@@ -1,3 +1,14 @@
+---
+title: "验收准备安排"
+type: plan
+task_line: structural-dynamics
+tags:
+  - structural-dynamics
+status: active
+date_added: 2026-09-04
+date_update: 2026-09-04
+---
+
 # 验收准备安排
 
 > 本文件是结构动力学软件模块验收准备工作的单一事实来源。依据：招标文件定稿（DUTAWZ-2026097）、标书响应文件 V6.23、2026-08-29 算海内部讨论（纪要见 [../meetings/2026-08-29-acceptance-prep-discussion.md](../meetings/2026-08-29-acceptance-prep-discussion.md)）。

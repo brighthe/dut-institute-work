@@ -1,3 +1,15 @@
+---
+title: "WSL/C++ 开发流程"
+type: manual
+task_line: hpc
+tags:
+  - hpc
+  - workflow
+status: in-progress
+date_added: 2026-08-04
+date_update: 2026-08-04
+---
+
 # WSL/C++ 开发流程
 
 本文面向第一次参与 SGSim C++ 开发的人员，说明如何判断构建结果、管理分支、阅读和修改代码、运行测试、调试以及收尾。实际配置、编译、动态库检查和算例运行的命令统一见 [build-and-run.md](build-and-run.md)；项目环境事实见 [environment.md](environment.md)。

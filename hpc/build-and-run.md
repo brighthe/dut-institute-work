@@ -1,3 +1,15 @@
+---
+title: "SGSim 的 WSL 构建与运行"
+type: manual
+task_line: hpc
+tags:
+  - hpc
+  - build
+status: in-progress
+date_added: 2026-08-04
+date_update: 2026-08-04
+---
+
 # SGSim 的 WSL 构建与运行
 
 本文是 SGSim 在本机的**唯一操作手册**。后续配置、编译、运行和调试统一使用 **WSL2 + Ubuntu 22.04**（2026-08-04 迁移，24.04 并存保留），不再以 Windows 构建流程作为日常入口。迁移原因与根因见 [environment.md](environment.md) 与 [log.md](log.md)。

@@ -1,8 +1,34 @@
-# 任务线：HPC 求解器性能与多后端并行
+---
+title: "任务线 · HPC 求解器性能与多后端并行"
+type: index
+tags:
+  - hpc
+  - task-line
+status: in-progress
+date_added: 2026-07-20
+date_update: 2026-09-16
+---
 
-研究院当前分派给我的主任务线：针对现有求解器（SGFEM）开展性能调优与多后端并行计算，重点是异构并行计算。2026-07-20 由李宁宁部长在「研究院-高性能计算」群内发布任务拆解，工作由李部长负责协调安排。
+# 任务线 · HPC 求解器性能与多后端并行
 
-## 文件索引
+研究院当前分派给我的主任务线：针对现有求解器（SGFEM）开展性能调优与多后端并行计算，重点是异构并行计算。2026-07-20 由李宁宁部长在「研究院—高性能计算」群内发布任务拆解，工作由李部长负责协调安排。
+
+本任务线与结构动力学软件模块验收任务线（[../structural-dynamics/README.md](../structural-dynamics/README.md)）相互独立：甲方均为大工体系，但合同、对接人与交付物互不相干。
+
+## 事实源分工
+
+| 内容 | 事实源 |
+| --- | --- |
+| 工作安排与任务拆解 | 本目录 [plan.md](plan.md)（**单一事实来源**，更新安排只改这里） |
+| 进度 | 本目录 [log.md](log.md)（append-only） |
+| 交付物与归档状态 | 本目录 [artifacts.md](artifacts.md) |
+| 会议纪要 | [../meetings/](../meetings/README.md)，按日期命名 |
+| 群聊原文 | [../chats/](../chats/README.md)；本目录只写结论，不复制逐字聊天 |
+| 算海内部执行过程、任务 issues 与过程产出 | `suanhaitech/houzai`；本目录只记项目状态与指针 |
+| 研究院源码、程序包、模型与内部文档原件 | 研究院 GitLab；本目录只记交付物清单与归档状态 |
+| 可复用技术知识（matrix-free、PETSc 调优、文献） | `dut-postdoc` |
+
+## 文件清单
 
 | 文件 | 作用 |
 | --- | --- |
@@ -15,14 +41,22 @@
 | [development-workflow.md](development-workflow.md) | WSL/C++ 开发流程：概念、分支、测试、调试与分阶段检查表 |
 | [gitlab-migration.md](gitlab-migration.md) | 代码迁入研究院 GitLab：仓库与子模块的访问权限范围、源码可见性边界 |
 
+`dev-access.md` 仅供本机使用，记录内部接入操作，已由 `.gitignore` 排除，不入 Git。
+
+## 内容纪律
+
+- 只写研究院与算海之间的**项目事实与结论**：状态、口径、节点、交付物。算海内部执行策略（具体技术选型、参数、算例规格）不写入，以 `suanhaitech/houzai` 为事实源。
+- 结论被推翻时在 [log.md](log.md) 新写一条更正，指明推翻了哪条、原结论在当时是否成立；历史条目不改写。
+- 内部系统的接入凭据与内网地址不得写入；账号、密码、Token、VPN 密钥、私钥、个人隐私，以及未经授权公开再分发的源码、程序包、模型和内部附件不得写入。
+
 ## 相关链接
 
-- 项目日报目录：[reports/daily/](../reports/daily/)
-- 阶段计划的来源讨论：[meetings/2026-07-09-stage-plan-discussion.md](../meetings/2026-07-09-stage-plan-discussion.md)
-- 与杜阳老师的落地路径讨论：[meetings/2026-07-20-duyang-discussion.md](../meetings/2026-07-20-duyang-discussion.md)
-- 算海内部周会与任务分工：[meetings/2026-07-20-suanhai-internal-weekly.md](../meetings/2026-07-20-suanhai-internal-weekly.md)
-- 与李宁宁部长确认节点与汇报机制：[meetings/2026-07-27-liningning-discussion.md](../meetings/2026-07-27-liningning-discussion.md)
-- 与魏华祎老师确认汇报、日报与沟通口径：[meetings/2026-07-27-suanhai-discussion.md](../meetings/2026-07-27-suanhai-discussion.md)
-- 算海项目过程仓（内部，任务 issues 与产出沉淀）：`suanhaitech/houzai`
+- 项目日报目录：[../reports/daily/](../reports/README.md)
+- 阶段计划的来源讨论：[../meetings/2026-07-09-stage-plan-discussion.md](../meetings/2026-07-09-stage-plan-discussion.md)
+- 与杜阳老师的落地路径讨论：[../meetings/2026-07-20-duyang-discussion.md](../meetings/2026-07-20-duyang-discussion.md)
+- 《HPC 研发规划（2026-2027）》中本人承担撰写的三节（已写入源文档，评审未进行）：[../reports/my-tasks/biweekly-04/rd-plan-2026-2027-heterogeneous.md](../reports/my-tasks/biweekly-04/rd-plan-2026-2027-heterogeneous.md)
+- 算海内部周会与任务分工：[../meetings/2026-07-20-suanhai-internal-weekly.md](../meetings/2026-07-20-suanhai-internal-weekly.md)
+- 与李宁宁部长确认节点与汇报机制：[../meetings/2026-07-27-liningning-discussion.md](../meetings/2026-07-27-liningning-discussion.md)
+- 与魏华祎老师确认汇报、日报与沟通口径：[../meetings/2026-07-27-suanhai-discussion.md](../meetings/2026-07-27-suanhai-discussion.md)
 - 沟通上下文（李宁宁、陈玉震、魏华祎等联系人的档案与聊天记录）：`heliangos:wechat/indexes/by-repository.md#dut-institute-work`
-- 相关技术知识沉淀（matrix-free、PIML 方向调研）：`dut-postdoc/research/postdoc-plan/long-term/direction-1-piml-matrix-free/`
+- 相关技术知识沉淀（matrix-free、PIML 方向调研）：`dut-postdoc:research/postdoc-plan/long-term/direction-1-piml-matrix-free/`

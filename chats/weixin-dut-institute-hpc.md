@@ -1,3 +1,16 @@
+---
+title: "微信 · 研究院—高性能计算群"
+type: chat-archive
+tags:
+  - chats
+  - hpc
+status: living
+channel: 微信 · 研究院—高性能计算群
+coverage: 2026-07-27 ~ 2026-08-07
+date_added: 2026-08-06
+date_update: 2026-08-09
+---
+
 # 研究院—高性能计算微信群记录
 
 - 平台：微信

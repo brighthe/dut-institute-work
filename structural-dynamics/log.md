@@ -1,3 +1,14 @@
+---
+title: "进度日志 · 结构动力学软件模块验收"
+type: log
+task_line: structural-dynamics
+tags:
+  - structural-dynamics
+status: living
+date_added: 2026-09-04
+date_update: 2026-09-04
+---
+
 # 进度日志 · 结构动力学软件模块验收
 
 > Append-only：新条目加在最上面，格式 `## [YYYY-MM-DD] <简述>`；只增不改历史条目。

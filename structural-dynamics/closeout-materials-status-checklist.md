@@ -1,3 +1,14 @@
+---
+title: "随信说明草稿：验收材料状态清单（发陈国海老师）"
+type: checklist
+task_line: structural-dynamics
+tags:
+  - structural-dynamics
+status: in-progress
+date_added: 2026-09-04
+date_update: 2026-09-04
+---
+
 # 随信说明草稿：验收材料状态清单（发陈国海老师）
 
 > 整理日期：2026-08-30。材料状态明细已定稿迁至 [acceptance-materials-checklist.md](acceptance-materials-checklist.md)，本文件只保留待发送的随信说明；发送后本草稿可删除。

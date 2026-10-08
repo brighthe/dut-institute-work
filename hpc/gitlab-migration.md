@@ -1,3 +1,15 @@
+---
+title: "SGSim 代码迁入 GitLab：仓库访问与源码可见性"
+type: manual
+task_line: hpc
+tags:
+  - hpc
+  - gitlab
+status: in-progress
+date_added: 2026-09-04
+date_update: 2026-09-04
+---
+
 # SGSim 代码迁入 GitLab：仓库访问与源码可见性
 
 本文只记录 SGSim 各仓库与子模块的访问权限范围，以及由此决定的源码可见性边界。

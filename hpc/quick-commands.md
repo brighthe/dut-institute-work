@@ -1,3 +1,15 @@
+---
+title: "SGSim 命令卡（22.04 WSL 速查）"
+type: manual
+task_line: hpc
+tags:
+  - hpc
+  - commands
+status: in-progress
+date_added: 2026-08-04
+date_update: 2026-08-04
+---
+
 # SGSim 命令卡(22.04 WSL 速查)
 
 > 完整手册见 [build-and-run.md](build-and-run.md)。本卡只记高频命令与红线,用于贴墙速查。

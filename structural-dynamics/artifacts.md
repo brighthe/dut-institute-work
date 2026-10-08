@@ -1,3 +1,14 @@
+---
+title: "验收材料与附件清单"
+type: artifacts
+task_line: structural-dynamics
+tags:
+  - structural-dynamics
+status: living
+date_added: 2026-09-04
+date_update: 2026-09-04
+---
+
 # 验收材料与附件清单
 
 本文件登记结构动力学软件模块验收相关材料的来源与本机归档状态。本仓为 Public：只记录管理所需元数据与用户授权的受控链接，不入库原件、正文或附件；受控链接仅作来源定位，不表示可公开访问或再分发。

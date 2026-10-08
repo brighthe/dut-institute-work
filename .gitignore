@@ -19,5 +19,8 @@ Thumbs.db
 *.docx
 /private/
 
+# 周期材料原件（本机保存，页面只放指针）
+reports/materials/**/*.html
+
 # 仅供本机使用的内部接入操作记录
 /hpc/dev-access.md

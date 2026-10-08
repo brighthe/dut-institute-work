@@ -1,3 +1,14 @@
+---
+title: "HPC 工作安排与任务拆解"
+type: plan
+task_line: hpc
+tags:
+  - hpc
+status: active
+date_added: 2026-07-20
+date_update: 2026-09-16
+---
+
 # HPC 工作安排与任务拆解
 
 > 单一事实来源：研究院 HPC 任务的安排、分工与状态以本文件为准；`heliangos/wechat` 各老师档案只留指针。
@@ -70,6 +81,7 @@
 ### 4. 多后端并行
 
 - [ ] 形成实施方案并评审。
+  - 书面载体为研究院《HPC 研发规划（2026-2027）》第 2.2 节，本人承担撰写；该节与 1.3.2、1.5 的抽取稿与撰写状态见 [rd-plan-2026-2027-heterogeneous.md](../reports/my-tasks/biweekly-04/rd-plan-2026-2027-heterogeneous.md)。
 - [ ] 实施多后端并行，重点实现异构并行计算。
 
 ### 协作与汇报

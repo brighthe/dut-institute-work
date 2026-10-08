@@ -1,3 +1,14 @@
+---
+title: "验收材料状态清单"
+type: checklist
+task_line: structural-dynamics
+tags:
+  - structural-dynamics
+status: in-progress
+date_added: 2026-09-04
+date_update: 2026-09-04
+---
+
 # 验收材料状态清单
 
 ## 一、已有（2 项）

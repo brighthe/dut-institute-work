@@ -1,3 +1,14 @@
+---
+title: "2026-07-27 · 算海讨论"
+type: meeting
+tags:
+  - hpc
+status: draft
+date: 2026-07-27
+date_added: 2026-07-28
+date_update: 2026-07-28
+---
+
 # 2026-07-27 · 算海讨论
 
 - **参与**：

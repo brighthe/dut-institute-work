@@ -1,3 +1,15 @@
+---
+title: "SGSim 项目环境事实"
+type: manual
+task_line: hpc
+tags:
+  - hpc
+  - environment
+status: in-progress
+date_added: 2026-08-04
+date_update: 2026-09-04
+---
+
 # SGSim 项目环境事实
 
 本文只记录 SGSim 在本机 WSL 中依赖的项目级环境、ABI 约束和已验证边界。日常配置、编译、动态库检查与算例运行统一见 [build-and-run.md](build-and-run.md)；开发方法见 [development-workflow.md](development-workflow.md)。
@@ -114,6 +126,22 @@ VPN、GitLab 账号和任务仓库权限均已开通。内网 GitLab 在浏览�
 ### 3.3 Windows 构建线
 
 Windows MinGW-w64 GCC 13.2.0、CMake 3.28.3 和对应 Artifact/ThirdParty 曾完成 ABI、编译和 CPardiso 算例验证。该路径作为历史事实保留在 [log.md](log.md)，不再是当前操作入口；后续项目配置、编译、运行和调试统一使用 WSL。
+
+### 3.4 各工具可用的 GitLab 读取通道
+
+内网 GitLab 需连内网且需登录，匿名请求一律 302 跳登录页。**AI 不持有、不索取、不代填任何凭据**，由用户在自己已登录的浏览器中打开，或由能复用用户登录态的工具读取；登录态失效时告知用户重新登录，不代为登录。
+
+各 AI 工具可用的通道不同，已验证结论：
+
+| 方式 | 结果 |
+| --- | --- |
+| Chrome 扩展（Claude Code 的 `claude-in-chrome`） | ✅ 可读，走用户真实 Chrome 中已登录的会话 |
+| `WebFetch` 类抓取 | ❌ 无登录态，只会拿到 302 跳转登录页 |
+| 内置浏览器（Claude Code 的 `Claude_Browser`） | ❌ 该站点返回「requires per-action approval，Browser read tools are not available」 |
+
+命令行侧（`curl`、`git`）能连通但同样无登录态：匿名请求 302，`git` 走明文 HTTP 会被 Git Credential Manager 拒绝。**需要拉取内容时走 SSH**，见 3.2。
+
+用户直接贴出 `git.ai4sim.com` 链接时视为要求读取该页面，直接用可用通道打开取正文，不先试其他方式、不反问。访问前提（任一不满足即失败，向用户说明而非反复重试）：VPN 已连接、浏览器正在运行且扩展已连接、GitLab 登录态未过期。
 
 ## 四、已验证边界
 

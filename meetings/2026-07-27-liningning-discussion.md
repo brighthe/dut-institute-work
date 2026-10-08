@@ -1,3 +1,14 @@
+---
+title: "2026-07-27 · 与李宁宁部长的讨论"
+type: meeting
+tags:
+  - hpc
+status: final
+date: 2026-07-27
+date_added: 2026-07-28
+date_update: 2026-07-28
+---
+
 # 2026-07-27 · 与李宁宁部长的讨论
 
 - **参与**：李宁宁部长、我
