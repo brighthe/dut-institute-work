@@ -1,7 +1,3 @@
-# 系统文件
-.DS_Store
-Thumbs.db
-
 # 本地编辑器配置
 .obsidian/
 .vscode/
@@ -12,19 +8,3 @@ Thumbs.db
 *.tmp
 *.tmp.*
 *~
-
-# 尚未获公开再分发授权的项目交付物
-*.exe
-*.zip
-*.docx
-/private/
-
-# 周期材料原件（本机保存，页面只放指针）
-reports/materials/**/*.html
-# 例外：经用户 2026-10-09 确认原样入 Git 的原件（逐份列出）
-!reports/materials/biweekly-05/SGSim_TensorFem进展汇报.html
-!reports/materials/biweekly-05/SGSim_BDDC进展汇报.html
-!reports/materials/biweekly-05/网格分区方案与测试.html
-
-# 仅供本机使用的内部接入操作记录
-/hpc/dev-access.md
