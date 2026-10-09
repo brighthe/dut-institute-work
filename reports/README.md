@@ -34,7 +34,7 @@ date_update: 2026-09-29
 | 02 | 2026-08-03 至 2026-08-14 | 08-14，[纪要](../meetings/2026-08-14-heterogeneous-parallel-second-biweekly.md) | [biweekly-02](daily/biweekly-02-2026-08-03-to-2026-08-14.md) | 无 | 无 |
 | 03 | 2026-08-17 至 2026-09-04 | 09-04，[纪要](../meetings/2026-09-04-heterogeneous-parallel-third-biweekly.md) | [biweekly-03](daily/biweekly-03-2026-08-17-to-2026-09-04.md) | 4 份 | 无 |
 | 04 | 2026-09-07 至 2026-09-18 | 09-18，[纪要](../meetings/2026-09-18-heterogeneous-parallel-fourth-biweekly.md) | [biweekly-04](daily/biweekly-04-2026-09-07-to-2026-09-18.md) | 7 份 | 1 份 |
-| 05 | 2026-09-19 至 2026-10-02 | 10-09（预定，对外通知未发） | [biweekly-05](daily/biweekly-05-2026-09-19-to-2026-10-02.md) | 7 份 | 无 |
+| 05 | 2026-09-19 至 2026-10-02 | 10-09（预定，对外通知未发） | [biweekly-05](biweekly-05-2026-09-19-to-2026-10-09.md) | 7 份 | 无 |
 
 三处需要说明的空档，均为事实记录，不作推断补全：
 

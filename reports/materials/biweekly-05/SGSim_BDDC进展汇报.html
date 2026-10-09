@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>SGSim BDDC 求解接入进展</title>
+<style>
+:root{--ink:#172f46;--muted:#617284;--teal:#009a91;--paper:#f7f9fb;--line:#dce5eb;--navy:#102536;--mint:#e4f2ef}
+*{box-sizing:border-box}body{margin:0;background:#101b28;color:var(--ink);font-family:Inter,"Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden}button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #e8a75e;outline-offset:4px}h1,h2,h3,p{margin:0}#viewport{position:fixed;inset:0 0 58px;display:flex;align-items:center;justify-content:center}#stage{width:1600px;height:900px;flex:none;position:relative;transform-origin:center center;box-shadow:0 35px 90px #0005}.slide{position:absolute;inset:0;display:none;background:var(--paper);padding:58px 76px;overflow:hidden}.slide.active{display:block}.slide header{height:166px}.eyebrow{font-size:17px;letter-spacing:3px;font-weight:700;color:#008b82;margin-bottom:13px}h2{font-size:47px;font-weight:750;letter-spacing:-1px;line-height:1.25}.subtitle{font-size:23px;color:var(--muted);margin-top:17px;line-height:1.5}footer{position:absolute;bottom:23px;left:76px;right:76px;display:flex;justify-content:space-between;gap:24px;border-top:1px solid var(--line);padding-top:14px;color:#758391;font-size:14px}footer span:nth-child(2){flex:1;text-align:center}h3{font-size:30px;font-weight:650}.muted{color:var(--muted)}.accent{color:#008e83}.small{font-size:19px;line-height:1.6;color:var(--muted)}.math{font-family:Georgia,"Times New Roman",serif}.formula{font-size:39px;line-height:1.5}.formula sub,.formula sup{font-size:.57em}.tag{font-size:18px;letter-spacing:1.3px;font-weight:650;color:#008d83}.body-copy{font-size:25px;line-height:1.85;color:#526d80}.note{font-size:20px;line-height:1.65;color:#61798a}.panel{background:#fff;border:1px solid var(--line);border-radius:18px}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:30px}.band{display:flex;align-items:center;gap:30px;margin-top:25px;padding:23px 29px;border-radius:13px;background:var(--mint);font-size:23px;line-height:1.5;color:#376b6a}.band strong{color:#008b82;font-size:25px;white-space:nowrap}.band.dark{background:#14354b;color:#d4e5ea}.band.dark strong{color:#60d1c4}.metric{display:flex;flex-direction:column;gap:8px}.metric strong{font-size:66px;font-weight:700;color:#008f83;line-height:1.12;letter-spacing:-1.8px;font-variant-numeric:tabular-nums}.metric strong em{font-size:30px;font-style:normal;margin-left:9px;letter-spacing:0}.metric span{font-size:22px;color:#526f80}.metric small{font-size:17px;color:#718594;line-height:1.5}.metric sup{font-size:.5em;vertical-align:super;letter-spacing:0}.link-button{padding:0;border:0;background:none;font-size:19px;color:#008d83;text-decoration:underline;text-underline-offset:5px}.cover{background:#102536;color:white}.cover .eyebrow{color:#5cd4c6}.cover h1{font-size:71px;font-weight:750;line-height:1.22;margin-top:62px;letter-spacing:-1.5px}.cover h1 span{color:#4dcebe}.cover .cover-sub{font-size:28px;color:#b2cad6;margin-top:29px;line-height:1.8}.cover .cover-detail{margin-top:24px;font-size:21px;color:#8fabbc;line-height:1.9}.cover footer{border-color:#2d4556;color:#8ea8b9}.cover-system{position:absolute;right:94px;top:210px;width:450px;padding:32px 38px;border:1px solid #3a5a6b;border-radius:19px;background:#173649}.cover-system .caption{font-size:18px;letter-spacing:2px;color:#7acdc4;margin-bottom:23px}.cover-system .system-row{display:flex;align-items:center;gap:24px;padding:20px 0;border-top:1px solid #345363}.cover-system b{font-size:27px;min-width:112px;color:#f0f7f9}.cover-system span{font-size:21px;line-height:1.6;color:#b7ced8}.cover-bottom{position:absolute;left:76px;right:76px;bottom:126px;display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:48px}.cover-bottom .metric{border-left:2px solid #2e686e;padding-left:25px}.cover-bottom strong{font-size:47px;color:#eaf9f6}.cover-bottom span{color:#9ebcc9;font-size:21px}.cover-bottom small{color:#85a7b8;font-size:17px}.progress-panel{height:440px;padding:32px 40px}.progress-panel h3{font-size:36px;margin:18px 0 22px}.progress-panel .body-copy{font-size:25px;line-height:1.9}.progress-panel .outcome{padding-top:25px;margin-top:28px;border-top:1px solid #d9e7e8;color:#008d83;font-size:25px}.progress-panel.new{background:linear-gradient(145deg,#fff 35%,#e5f3ef)}.diagram{width:100%;height:526px;display:block}.diagram text{font-family:Inter,"Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif}.data-layout{display:grid;grid-template-columns:1.05fr 1fr;gap:34px}.data-panel{height:454px;padding:30px 34px}.data-panel h3{margin-top:13px;margin-bottom:22px}.data-line{display:grid;grid-template-columns:105px 1fr;align-items:center;gap:15px;padding:19px 0;border-top:1px solid #e3eaee}.data-line .symbol{color:#008d83;font-size:34px}.data-line p{font-size:23px;line-height:1.5;color:#526c7e}.mapping-title{font-size:21px;color:#657c8c;margin:22px 0 12px}.mapping{display:grid;grid-template-columns:1.8fr repeat(3,1fr);font-size:23px;text-align:center;border:1px solid #cee0de;border-radius:10px;overflow:hidden}.mapping>div{padding:13px;background:#edf6f3;border-right:1px solid #cee0de}.mapping>div:nth-child(4n){border-right:0}.mapping>div:nth-child(n+5){background:white;border-top:1px solid #cee0de}.mapping>div:nth-child(4n+1){font-size:19px;color:#587384}.solver-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:32px}.solver-diagram{height:455px}.solver-side{padding:28px 33px;height:455px}.solver-side h3{margin-bottom:20px}.solver-side article+article{border-top:1px solid #dfe7ec;margin-top:26px;padding-top:23px}.solver-side h4{margin:0 0 10px;font-size:24px;color:#008b81}.solver-side p{font-size:23px;color:#536f80;line-height:1.65}.case-layout{display:grid;grid-template-columns:450px 1fr;gap:34px}.case-panel{height:488px;padding:32px}.case-panel h3{font-size:40px;margin:12px 0 27px}.case-panel .metric{padding:22px 0;border-top:1px solid #dfe7ec}.case-panel .metric strong{font-size:45px}.case-panel .metric span{font-size:21px}.settings{border-collapse:collapse;width:100%;font-size:23px}.settings th,.settings td{text-align:left;padding:18px 22px;border-bottom:1px solid #dce5eb;line-height:1.4}.settings th{color:#6b7f8c;font-weight:500;width:245px}.settings td{color:#244b5d}.settings tr:first-child th,.settings tr:first-child td{padding-top:5px}.case-note{font-size:19px;line-height:1.7;color:#60798a;margin-top:16px}.results-layout{display:grid;grid-template-columns:minmax(0,1fr) 365px;gap:31px}.convergence{height:460px;padding:22px 27px}.convergence h3{font-size:25px;color:#3d5d71;font-weight:600}.convergence svg{width:100%;height:367px;display:block}.convergence p{font-size:17px;color:#718594;line-height:1.5}.result-side{height:460px;display:flex;flex-direction:column;justify-content:space-between;padding:8px 0}.result-side .metric{border-bottom:1px solid #dce5eb;padding-bottom:22px}.result-side .metric:last-child{border-bottom:0;padding-bottom:0}.result-side .metric strong{font-size:56px}.result-side .residual strong{font-size:47px;letter-spacing:-1px}.result-band{justify-content:space-between}.result-band>div{font-size:21px}.result-band strong{font-size:24px}.migration{padding:26px 31px;margin-bottom:24px;display:flex;align-items:center;gap:36px;min-height:166px}.migration.future{background:#e6f3ef;border-color:#a5d1c6}.migration-label{width:183px;flex:none}.migration-label h3{font-size:30px}.migration-label p{font-size:18px;color:#718695;margin-top:13px;line-height:1.5}.migration-flow{display:flex;align-items:center;flex:1;gap:16px}.migration-flow .flow-item{flex:1;padding:22px 18px;background:#eaf0f4;border-radius:12px;min-height:94px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;line-height:1.5;color:#395d73}.migration-flow .flow-item.algebra{background:#16384b;color:#f0f8fa}.migration-flow .arrow{font-size:30px;color:#799f9f}.migration.future .flow-item{background:#fff;color:#2b6e69}.migration.future .flow-item.algebra{background:#00988b;color:white}.next-note{padding:22px 5px 0;display:flex;gap:55px;align-items:flex-start}.next-note h3{font-size:25px;color:#008b82;white-space:nowrap}.next-note p{font-size:23px;line-height:1.7;color:#5c7484}.controls{height:58px;position:fixed;bottom:0;left:0;right:0;display:flex;gap:16px;align-items:center;justify-content:center;color:#bed0dc;font-size:14px}.controls button,.controls select{border:1px solid #33495b;background:#1a2b3b;color:#d2e2ea;border-radius:7px;padding:7px 13px}.controls button:disabled{opacity:.35;cursor:default}.controls button:not(:disabled):hover{background:#294254}.controls select{max-width:245px}.page-label{min-width:60px;text-align:center}.keyboard-hint{font-size:12px;color:#7f98aa;margin-left:15px}#progress{position:fixed;bottom:58px;height:3px;background:#28b9a7;left:0;transition:width .2s}dialog{border:0;border-radius:18px;padding:35px;max-width:1080px;width:90vw;max-height:86vh;overflow:auto;background:#f7f9fb;color:var(--ink)}dialog::backdrop{background:#0d1d2bd9}.dialog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.dialog-top h2{font-size:28px;letter-spacing:0}.dialog-top button{border:0;background:#e2e9ee;padding:5px 13px;border-radius:8px;font-size:22px}dialog p{font-size:18px;line-height:1.85;margin:14px 0}dialog pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;background:#eaf0f4;padding:20px;border-radius:10px}dialog table{border-collapse:collapse;width:100%;font-size:18px}dialog td,dialog th{text-align:left;padding:12px;border-bottom:1px solid #d9e3e9}dialog th{font-weight:500;color:#60798a}dialog .record-note{font-size:16px;color:#718391}.outline-list{display:grid;grid-template-columns:1fr 1fr;gap:13px}.outline-list button{background:white;text-align:left;border:1px solid #d7e3e9;border-radius:10px;padding:18px;font-size:20px;color:#31566d}.outline-list b{margin-right:14px;color:#00958b}noscript{display:block;position:fixed;top:12px;left:12px;color:#fff;background:#152d3f;z-index:20;padding:12px}@media(max-width:680px){.keyboard-hint{display:none}.controls{gap:7px;font-size:12px}.controls button,.controls select{padding:7px 8px}.controls select{max-width:150px}.outline-list{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}@media print{@page{size:16in 9in;margin:0}body{background:white;overflow:visible}#viewport{position:static;display:block}#stage{width:1600px;height:auto;transform:none!important;box-shadow:none;zoom:.96}.slide{display:block!important;position:relative;width:1600px;height:900px;break-after:page;page-break-after:always}.slide:last-child{break-after:auto;page-break-after:auto}.controls,#progress,dialog,noscript{display:none!important}.link-button{display:none}}
+.data-panel{padding:27px 32px}.data-panel h3{margin-bottom:17px}.data-panel .body-copy{font-size:23px;line-height:1.6}.data-panel .mapping-title{margin:16px 0 10px}.data-panel .mapping>div{padding:10px}.data-panel .small{font-size:18px;line-height:1.5}.case-panel .metric{padding:16px 0}.solver-side article+article{margin-top:18px;padding-top:17px}.solver-side h4{font-size:23px;margin-bottom:8px}.solver-side p{font-size:22px;line-height:1.5}
+.parameter-table{width:100%;border-collapse:collapse;font-size:21px;line-height:1.4}.parameter-table th,.parameter-table td{padding:9px 16px;text-align:left;border-bottom:1px solid var(--line)}.parameter-table thead th{color:#60798a;font-weight:500;background:#eaf2f4}.parameter-table tbody th{width:470px;font-weight:500;color:#008b82}.parameter-table code{font-size:19px;white-space:nowrap}.parameter-table td{color:#395d70}.parameter-actions{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:22px}.parameter-actions p{font-size:19px;line-height:1.5;color:#61798a}.parameter-actions button{flex:none}#parameter-details code{font-size:15px;overflow-wrap:anywhere}#parameter-details th{width:38%;vertical-align:top}#parameter-details td{line-height:1.65}#parameter-details a{color:#008d83;text-underline-offset:3px}
+.report-table{width:100%;border-collapse:collapse;font-size:22px;line-height:1.5}.report-table th,.report-table td{text-align:left;padding:20px 18px;border-bottom:1px solid var(--line)}.report-table thead th{font-size:20px;color:#60798a;background:#eaf2f4;font-weight:500}.report-table tbody th{font-weight:600;color:#284d63}.report-table td{color:#48687a;font-variant-numeric:tabular-nums}.report-table small{display:block;font-size:17px;font-weight:400;color:#748795;margin-top:3px}.report-table .number{text-align:right;white-space:nowrap}.report-table .pending{color:#8a7861}.report-table .case-name{font-size:21px;overflow-wrap:anywhere}.report-table.backend td{width:36%}.report-table.backend th{width:28%}.report-note{font-size:20px;line-height:1.7;color:#61798a;margin-top:22px}.report-note strong{color:#008b82;font-weight:600}.config-summary{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:24px;padding:22px 26px;background:var(--mint);border-radius:13px}.config-summary p{font-size:21px;line-height:1.65;color:#436e71}.config-summary strong{color:#008b82}.optimization{display:grid;grid-template-columns:1fr 1fr;gap:32px}.optimization article{padding:30px 34px;min-height:355px}.optimization h3{font-size:31px;margin:16px 0 22px}.optimization p{font-size:24px;line-height:1.85;color:#536f80}.sources{font-size:17px;line-height:1.7;color:#758594;margin-top:18px}.sources a,dialog a{color:#008d83;text-underline-offset:3px}dialog summary{font-size:19px;color:#008b82;cursor:pointer;margin:18px 0}dialog .convergence{height:auto}dialog .convergence svg{height:330px}.cover-bottom .metric .method-label{font-size:39px}
+</style>
+</head>
+<body>
+<main id="viewport" aria-label="SGSim BDDC 求解接入进展"><div id="stage">
+
+<section class="slide cover active" data-title="SGSim BDDC 求解接入进展" aria-label="第 1 页：SGSim BDDC 求解接入进展">
+ <div class="eyebrow">ENGINEERING PROGRESS / 2026.10</div>
+ <h1>SGSim<br><span>BDDC 求解接入</span></h1>
+ <p class="cover-sub">原有有限元流程保留<br>子域数据准备与代数求解衔接</p>
+ <p class="cover-detail">多算例验证与求解后端对照<br>2026 年 10 月 8 日</p>
+ <div class="cover-system" aria-label="模块职责">
+  <div class="caption">计算与求解接口</div>
+  <div class="system-row"><b>SGFem</b><span>全局方程<br>子域矩阵与编号映射</span></div>
+  <div class="system-row"><b>Algebra</b><span>PETSc 迭代求解<br>BDDC 预条件</span></div>
+ </div>
+ <div class="cover-bottom">
+  <div class="metric"><strong>4<em>组算例</em></strong><span>实体、混合单元、约束与壳</span></div>
+  <div class="metric"><strong>16 / 24<em>MPI</em></strong><span>原始分区数据库</span></div>
+  <div class="metric"><strong class="method-label">CG / GMRES</strong><span>BDDC 配置与时间、内存记录</span></div>
+ </div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>代数库接入与算例验证</span><span>01 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="接入进展" aria-label="第 2 页：接入进展">
+ <header><div class="eyebrow">01 / INTEGRATION</div><h2>接入进展</h2><p class="subtitle">沿用 SGSim 原有有限元处理流程，为 Algebra 提供 BDDC 所需的数据。</p></header>
+ <div class="two-col">
+  <article class="panel progress-panel"><div class="tag">SGFem</div><h3>保留原有分析流程</h3><p class="body-copy">单元刚度与全局方程装配<br>SPC、MPC、AutoSPC 处理<br>载荷生成、解恢复与结果输出</p><p class="outcome">补充子域矩阵与局部到全局编号映射</p></article>
+  <article class="panel progress-panel new"><div class="tag">Algebra</div><h3>接入 PETSc BDDC</h3><p class="body-copy">接收全局矩阵与子域代数数据<br>构造 MATIS 并设置 BDDC<br>完成迭代求解，返回独立方程解</p><p class="outcome">已具备端到端运行与多算例验证基础</p></article>
+ </div>
+ <div class="band"><strong>当前接入方式</strong><span>Main 临时分支衔接现有调用流程，正式接入位置为 FEMSolve。</span></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>原有求解方式保留</span><span>02 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="总体架构" aria-label="第 3 页：总体架构">
+ <header><div class="eyebrow">02 / ARCHITECTURE</div><h2>总体架构</h2><p class="subtitle">SGFem 完成有限元数据准备，Algebra 完成代数求解，结果返回原有恢复流程。</p></header>
+ <svg class="diagram" viewBox="0 0 1448 526" role="img" aria-labelledby="architecture-title architecture-desc">
+  <title id="architecture-title">SGFem 与 Algebra 的数据衔接</title><desc id="architecture-desc">分区数据库进入 SGFem，单元计算同时向原有装配流程和区域贡献保存提供数据。原有约束处理形成全局方程，并提供约束映射构造子域数据。Algebra 接收全局矩阵、右端项和子域数据，完成 BDDC 求解后将解返回 SGFem。</desc>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#6c969c"/></marker></defs>
+  <rect x="0" y="10" width="926" height="399" rx="18" fill="#fff" stroke="#dce5eb"/>
+  <rect x="958" y="10" width="490" height="399" rx="18" fill="#e5f2ef" stroke="#b9d8d0"/>
+  <text x="28" y="51" fill="#008e83" font-size="26" font-weight="700">SGFem</text><text x="987" y="51" fill="#008e83" font-size="26" font-weight="700">Algebra</text>
+  <g fill="#eaf0f4" stroke="#d6e1e8"><rect x="25" y="131" width="169" height="109" rx="13"/><rect x="229" y="131" width="182" height="109" rx="13"/><rect x="469" y="81" width="210" height="94" rx="13"/><rect x="469" y="259" width="210" height="94" rx="13"/><rect x="728" y="81" width="174" height="94" rx="13"/><rect x="728" y="259" width="174" height="94" rx="13"/></g>
+  <g fill="#2f546a" text-anchor="middle" font-size="24"><text x="109" y="174">分区数据库</text><text x="109" y="210" font-size="19">节点、单元及模型</text><text x="320" y="174">单元计算</text><text x="320" y="210" font-size="19">刚度与装配自由度</text><text x="574" y="120">原有全局装配</text><text x="574" y="151" font-size="19">原有约束处理</text><text x="574" y="298">保存区域贡献</text><text x="574" y="329" font-size="19">利用原约束映射</text><text x="815" y="120">全局方程</text><text x="815" y="152" font-size="25">A、b</text><text x="815" y="298">子域数据</text><text x="815" y="330" font-size="25">Kᵢ、Rᵢ</text></g>
+  <path d="M194 185H229 M411 185H437V128H469 M437 185V306H469 M679 128H728 M679 306H728" fill="none" stroke="#6c969c" stroke-width="2.3" marker-end="url(#arr)"/>
+  <path d="M574 175V259" fill="none" stroke="#6c969c" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arr)"/><text x="598" y="219" fill="#718694" font-size="18">约束结果</text>
+  <rect x="995" y="81" width="416" height="94" rx="13" fill="#fff" stroke="#c5dbd6"/><rect x="995" y="259" width="416" height="94" rx="13" fill="#00998c"/>
+  <text x="1203" y="118" font-size="25" text-anchor="middle" fill="#2c5668">PETSc Krylov 迭代</text><text x="1203" y="152" font-size="20" text-anchor="middle" fill="#607b89">使用 A 计算算子作用，使用 b 求解</text>
+  <text x="1203" y="297" font-size="25" text-anchor="middle" fill="#fff">MATIS / BDDC</text><text x="1203" y="330" font-size="20" text-anchor="middle" fill="#d9f6ef">利用 Kᵢ、Rᵢ 构造预条件</text>
+  <path d="M902 128H995 M902 306H995 M1203 259V175" fill="none" stroke="#6c969c" stroke-width="2.3" marker-end="url(#arr)"/>
+  <rect x="229" y="448" width="673" height="66" rx="12" fill="#e8f1f4"/><text x="565" y="490" text-anchor="middle" fill="#365e71" font-size="25">SGFem 解恢复、反力与应力计算、结果输出</text>
+  <path d="M1411 128H1430V480H902" fill="none" stroke="#6c969c" stroke-width="2.3" marker-end="url(#arr)"/><text x="1131" y="458" fill="#557b86" font-size="21">返回独立方程解</text>
+ </svg>
+ <footer><span>SGSim BDDC · 2026.10</span><span>全局矩阵与子域矩阵使用同一最终方程编号</span><span>03 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="子域数据" aria-label="第 4 页：子域数据">
+ <header><div class="eyebrow">03 / SUBDOMAIN DATA</div><h2>子域数据</h2><p class="subtitle">保存当前区域的刚度贡献，利用 SGFem 原有约束处理结果构造子域算子。</p></header>
+ <div class="data-layout">
+  <article class="panel data-panel"><div class="tag">输入与构造</div><h3>复用约束处理结果</h3>
+   <div class="data-line"><div class="symbol math">K̂<sub>i</sub></div><p>当前区域单元刚度的累加结果</p></div>
+   <div class="data-line"><div class="symbol math">T<sub>i</sub></div><p>依据已有约束关系形成的局部展开</p></div>
+   <div class="formula math accent" style="margin-top:23px;text-align:center">K<sub>i</sub> = T<sub>i</sub><sup>T</sup> K̂<sub>i</sub> T<sub>i</sub></div>
+   <p class="small" style="margin-top:17px">约束判定、非零边界值及载荷处理仍由原流程负责。</p>
+  </article>
+  <article class="panel data-panel"><div class="tag">传入 Algebra</div><h3>局部矩阵与编号映射</h3>
+   <p class="body-copy">K<sub>i</sub>：约束处理后的子域刚度矩阵<br>R<sub>i</sub>：每个局部行列对应哪个全局方程</p>
+   <p class="mapping-title">编号映射示意</p>
+   <div class="mapping" aria-label="编号映射示例"><div>局部行列</div><div>0</div><div>1</div><div>2</div><div>全局方程</div><div>7</div><div>21</div><div>36</div></div>
+   <p class="small" style="margin-top:14px">界面配置还使用坐标、分量标识等元数据；Algebra 不读取数据库和原始物理约束。</p>
+  </article>
+ </div>
+ <div class="band"><strong>装配关系</strong><span class="formula math">A = ∑<sub>i</sub> R<sub>i</sub><sup>T</sup> K<sub>i</sub> R<sub>i</sub></span><span style="font-size:20px">公式按实数静力问题表示。</span></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>Rᵢ 表示最终方程的索引映射，Tᵢ 表示约束变换</span><span>04 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="BDDC 求解流程" aria-label="第 5 页：BDDC 求解流程">
+ <header><div class="eyebrow">04 / SOLVER</div><h2>BDDC 求解流程</h2><p class="subtitle">全局矩阵用于迭代计算，MATIS 中的子域数据用于 BDDC 预条件。</p></header>
+ <div class="solver-layout">
+  <svg class="panel solver-diagram" viewBox="0 0 835 455" role="img" aria-labelledby="solver-title solver-desc">
+   <title id="solver-title">全局算子与 BDDC 预条件的关系</title><desc id="solver-desc">Krylov 迭代使用全局矩阵 A 和右端 b。BDDC 根据 MATIS 子域矩阵完成局部修正和粗空间校正，结合配置的界面加权提供预条件作用。</desc>
+   <defs><marker id="arr-solver" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#6c969c"/></marker></defs>
+   <rect x="40" y="28" width="755" height="82" rx="12" fill="#173b50"/><text x="417" y="64" fill="white" text-anchor="middle" font-size="27">Krylov 迭代</text><text x="417" y="93" fill="#bcd6df" text-anchor="middle" font-size="20">全局算子 A，右端 b</text>
+   <rect x="40" y="166" width="755" height="243" rx="14" fill="#e8f4f0" stroke="#b2d7cb"/><text x="68" y="203" fill="#008c80" font-size="25" font-weight="650">BDDC 预条件</text>
+   <rect x="68" y="228" width="326" height="85" rx="10" fill="#fff" stroke="#c3dad6"/><rect x="441" y="228" width="326" height="85" rx="10" fill="#fff" stroke="#c3dad6"/>
+   <text x="231" y="263" fill="#34596d" font-size="25" text-anchor="middle">局部修正</text><text x="231" y="294" fill="#607c8b" font-size="19" text-anchor="middle">Dirichlet / Neumann</text>
+   <text x="604" y="263" fill="#34596d" font-size="25" text-anchor="middle">粗空间校正</text><text x="604" y="294" fill="#607c8b" font-size="19" text-anchor="middle">粗问题继续采用 BDDC</text>
+   <text x="417" y="370" fill="#00877b" font-size="23" text-anchor="middle">MATIS 子域算子与界面加权</text>
+   <path d="M417 166V110" fill="none" stroke="#6c969c" stroke-width="2.5" marker-end="url(#arr-solver)"/><text x="442" y="147" fill="#5b7b89" font-size="18">预条件作用</text>
+  </svg>
+  <div class="panel solver-side">
+   <article><h4>当前区域组织</h4><p>一个 MPI rank 对应一个物理子域。直接使用已有一级分区，无需 TSV。</p></article>
+   <article><h4>粗层组织</h4><p>多层 BDDC 对粗问题继续组织求解。物理子域由分区数据提供。</p></article>
+   <article><h4>局部分解</h4><p>PETSc 标准 LU 接口调用所选分解后端，支持与外层迭代方法分别配置。</p></article>
+  </div>
+ </div>
+ <div class="band dark"><strong>算子接口</strong><span>Amat = 全局 A</span><span style="color:#7cafb5">│</span><span>Pmat = MATIS</span></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>外层迭代、界面约束与分解后端分别配置</span><span>05 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="参数选择与说明" aria-label="第 6 页：参数选择与说明">
+ <header><div class="eyebrow">05 / PARAMETERS</div><h2>参数选择与说明</h2><p class="subtitle">参数共同决定迭代、粗空间与局部分解的工作量，需结合算例选择。</p></header>
+ <table class="parameter-table"><thead><tr><th scope="col">参数名</th><th scope="col">作用与取舍</th></tr></thead><tbody>
+  <tr><th scope="row"><code>-ksp_type</code></th><td>按矩阵与预条件性质选择 CG、GMRES 或 FGMRES。</td></tr>
+  <tr><th scope="row"><code>-ksp_rtol</code> / <code>-ksp_max_it</code></th><td>控制相对残差容限与迭代上限，收紧容限通常增加求解工作。</td></tr>
+  <tr><th scope="row"><code>-ksp_gmres_restart</code></th><td>控制重启周期，增大会增加向量存储和正交化开销。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_corner_selection</code></th><td>依据子域面与坐标选取角点，影响粗空间约束。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_edges</code></th><td>控制边约束是否进入粗空间，增加约束会扩大粗问题。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_faces</code></th><td>控制面约束是否进入粗空间，平衡约束作用与粗问题成本。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_deluxe_scaling</code></th><td>控制 Deluxe 界面缩放，影响界面加权与预条件构建成本。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_schur_layers</code></th><td>控制经济型 Deluxe 使用的局部层数，影响缩放构建范围。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_levels</code></th><td>控制额外粗层级数量，rank 内子域数由分区数据决定。</td></tr>
+  <tr><th scope="row"><code>-bddc_factorization_backend</code></th><td>SGSim 统一选项，指定分解后端，影响局部与粗层分解。</td></tr>
+ </tbody></table>
+ <div class="parameter-actions"><p>性能取舍需综合构建、迭代与内存开销，参数调整不保证耗时或内存单调改善。</p><button class="link-button" data-dialog="parameter-details">完整参数说明</button></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>具体取值见验证算例与配置</span><span>06 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="求解方法与分解后端" aria-label="第 7 页：求解方法与分解后端">
+ <header><div class="eyebrow">06 / SOLVER BACKENDS</div><h2>求解方法与分解后端</h2><p class="subtitle">外层 Krylov 方法组织迭代，分解后端承担 BDDC 局部与粗问题的直接求解。</p></header>
+ <table class="report-table backend"><thead><tr><th scope="col">分解后端</th><th scope="col">技术职责与支持条件</th><th scope="col">本轮验证范围</th></tr></thead><tbody>
+  <tr><th scope="row">MUMPS<small>外部稀疏直接求解器</small></th><td>提供顺序与并行矩阵的直接分解。<br>需 PETSc 编入 MUMPS 支持。</td><td>通过标准 PCLU 承担 BDDC 局部与粗层分解。</td></tr>
+  <tr><th scope="row">PETSc 原生 LU<small>PETSc 内建分解实现</small></th><td>可配置为局部或粗问题分解选项。<br>支持范围取决于矩阵类型。</td><td>本轮尚无同配置时间与内存记录。</td></tr>
+  <tr><th scope="row">MKL CPARDISO<small>MKL Cluster PARDISO</small></th><td>提供并行稀疏直接求解。本轮用于全局线性方程组。</td><td>四例直接法已完成，退出码均为 0。<br>本轮未测试其作为 BDDC 分解后端。</td></tr>
+ </tbody></table>
+ <p class="report-note"><strong>Krylov 选择</strong>　CG 要求矩阵与预条件满足对称正定条件。GMRES 使用固定线性预条件，FGMRES 支持变化或非线性预条件。</p>
+ <p class="sources">官方说明：<a href="https://petsc.org/release/manualpages/PC/PCLU/" target="_blank" rel="noopener noreferrer">PCLU</a>、<a href="https://petsc.org/release/manualpages/Mat/MatSolverType/" target="_blank" rel="noopener noreferrer">内建与外部分解后端</a>、<a href="https://petsc.org/release/manualpages/Mat/MATSOLVERMUMPS/" target="_blank" rel="noopener noreferrer">MUMPS</a>、<a href="https://petsc.org/release/manualpages/Mat/MATSOLVERMKL_CPARDISO/" target="_blank" rel="noopener noreferrer">CPARDISO</a>。Krylov 条件详见参数弹窗。</p>
+ <footer><span>SGSim BDDC · 2026.10</span><span>分解后端的可用能力与本轮已测结果分别列示</span><span>07 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="验证算例与配置" aria-label="第 8 页：验证算例与配置">
+ <header><div class="eyebrow">07 / TEST CONFIGURATION</div><h2>验证算例与配置</h2><p class="subtitle">使用各算例原始分区数据库，一个 MPI rank 对应一个区域，不传 TSV。</p></header>
+ <table class="report-table"><thead><tr><th scope="col">算例</th><th scope="col">MPI</th><th scope="col">外层方法</th><th scope="col">界面配置</th></tr></thead><tbody>
+  <tr><th scope="row" class="case-name">10w-3d<small>129,591 阶，5,413,869 非零元</small></th><td>16</td><td>CG</td><td>角点，edges = 0，faces = 0，Deluxe = 0</td></tr>
+  <tr><th scope="row" class="case-name">100w-mix23d</th><td>24</td><td>CG</td><td>角点 + 边平均 + Deluxe，faces = 0</td></tr>
+  <tr><th scope="row" class="case-name">100w-mix23d-rbe</th><td>24</td><td>CG</td><td>角点 + 边平均 + Deluxe，faces = 0</td></tr>
+  <tr><th scope="row" class="case-name">17w 壳<small>Pshell_17w_cquad4_Pload2</small></th><td>24</td><td>GMRES 右预条件<small>restart = 100</small></td><td>角点 + 边平均 + Deluxe，faces = 0</td></tr>
+ </tbody></table>
+ <div class="config-summary"><p><strong>BDDC 共同求解设置</strong><br>MUMPS / 标准 PCLU，levels = 1<br>rtol = 10⁻⁸，max_it = 500，norm = unpreconditioned</p><p><strong>BDDC 共同运行设置</strong><br>OMP / MKL / OpenBLAS 均为 1<br>adaptive = 0，nnsp = 0，最细层与粗层采用同类配置</p></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>本页记录 BDDC 迭代法配置，直接法配置见运行记录</span><span>08 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="多算例时间与内存" aria-label="第 9 页：多算例时间与内存">
+ <header><div class="eyebrow">08 / CURRENT RESULTS</div><h2>多算例时间与内存</h2><p class="subtitle">四组算例均完成计算，壳算例按已接受精度记录，真实残差单独列示。</p></header>
+ <table class="report-table" id="current-results"><thead><tr><th scope="col">算例 / 方法</th><th scope="col" class="number">wall / s</th><th scope="col" class="number">总 RSS 峰值 / GiB</th><th scope="col">迭代 / 真实相对残差</th></tr></thead><tbody>
+  <tr data-case="10w-3d"><th scope="row">10w-3d<small>CG，16 MPI</small></th><td class="number">11.74</td><td class="number">8.79</td><td>54 步 / 7.62 × 10⁻⁹</td></tr>
+  <tr data-case="100w-mix23d"><th scope="row">100w-mix23d<small>CG，24 MPI</small></th><td class="number">215.20</td><td class="number">45.74</td><td>110 步 / 9.14 × 10⁻⁹</td></tr>
+  <tr data-case="100w-mix23d-rbe"><th scope="row">100w-mix23d-rbe<small>CG，24 MPI</small></th><td class="number">218.79</td><td class="number">44.09</td><td>109 步 / 9.90 × 10⁻⁹</td></tr>
+  <tr data-case="Pshell_17w_cquad4_Pload2"><th scope="row">17w 壳<small>GMRES，24 MPI</small></th><td class="number">75.77</td><td class="number">26.11</td><td>99 步 / 6.15 × 10⁻⁶<small>按已接受精度记录</small></td></tr>
+ </tbody></table>
+ <p class="report-note">全流程时间：mpirun 启动至结果输出结束的墙钟时间。<br>总 RSS 峰值：每秒采样同一时刻全部 SGFEM 进程的 RSS 总和，取最大值。</p>
+ <div class="parameter-actions"><p>真实相对残差采用 ‖b − Ax‖ / ‖b‖。壳算例未达到 10⁻⁸ 的真实相对残差目标。</p><button class="link-button" data-dialog="run-record">运行记录与统计口径</button></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>四例均退出 0，KSP 报告 CONVERGED_RTOL</span><span>09 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="直接法与迭代法对照" aria-label="第 10 页：直接法与迭代法对照">
+ <header><div class="eyebrow">09 / COMPARISON</div><h2>直接法与迭代法对照</h2><p class="subtitle">BDDC 迭代法与 CPARDISO 直接法：相同算例、MPI 规模及单线程设置。</p></header>
+ <table class="report-table" id="direct-comparison"><thead><tr><th scope="col">算例 / MPI</th><th scope="col" class="number">BDDC<small>全流程 / s</small></th><th scope="col" class="number">CPARDISO<small>全流程 / s</small></th><th scope="col" class="number">BDDC<small>总 RSS / GiB</small></th><th scope="col" class="number">CPARDISO<small>总 RSS / GiB</small></th></tr></thead><tbody>
+  <tr data-case="10w-3d"><th scope="row">10w-3d / 16</th><td class="number">11.74</td><td class="number">10.64</td><td class="number">8.79</td><td class="number">9.88</td></tr>
+  <tr data-case="100w-mix23d"><th scope="row">100w-mix23d / 24</th><td class="number">215.20</td><td class="number">101.93</td><td class="number">45.74</td><td class="number">57.29</td></tr>
+  <tr data-case="100w-mix23d-rbe"><th scope="row">100w-mix23d-rbe / 24</th><td class="number">218.79</td><td class="number">98.17</td><td class="number">44.09</td><td class="number">60.30</td></tr>
+  <tr data-case="Pshell_17w_cquad4_Pload2"><th scope="row">17w 壳 / 24</th><td class="number">75.77</td><td class="number">26.44</td><td class="number">26.11</td><td class="number">30.70</td></tr>
+ </tbody></table>
+ <p class="report-note">两组依赖库环境不同，直接法尚未独立核对真实残差；本表用于运行成本参考，不作为严格同环境、同精度的算法性能对照。</p>
+ <div class="parameter-actions"><p>全流程包含装配、求解与结果输出；总 RSS 为每秒采样的同时总和峰值。</p><button class="link-button" data-dialog="run-record">运行记录与统计口径</button></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>CPARDISO 四例均退出 0，结果导出成功</span><span>10 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="rank 内物理子域细分" aria-label="第 11 页：rank 内物理子域细分">
+ <header><div class="eyebrow">10 / OPTIMIZATION</div><h2>rank 内物理子域细分</h2><p class="subtitle">后续优先控制单个局部问题的规模，评估每个 MPI rank 承载多个物理子域。</p></header>
+ <div class="optimization">
+  <article class="panel"><div class="tag">当前</div><h3>每个 rank 一个区域</h3><p>现有分区直接形成一个子域矩阵及编号映射。<br>局部分解规模随该区域自由度增长。</p></article>
+  <article class="panel" style="background:#e6f3ef;border-color:#a5d1c6"><div class="tag">后续方案</div><h3>每个 rank 多个物理子域</h3><p>进一步细分区域，分别形成 K<sub>i</sub> 与 R<sub>i</sub>。<br>缩小单个局部矩阵，同时评估新增界面和粗空间成本。</p></article>
+ </div>
+ <div class="band"><strong>与 levels 的关系</strong><span>物理细分改变细层子域及其界面，pc_bddc_levels 控制粗问题的递归层级。</span></div>
+ <p class="report-note">优化效果需在固定 MPI 规模和求解设置下测量。当前记录尚未包含 rank 内细分测试。</p>
+ <footer><span>SGSim BDDC · 2026.10</span><span>物理子域组织与粗层递归分别设计</span><span>11 / 12</span></footer>
+</section>
+
+<section class="slide" data-title="后续正式接入" aria-label="第 12 页：后续正式接入">
+ <header><div class="eyebrow">11 / NEXT STEP</div><h2>后续正式接入</h2><p class="subtitle">由 FEMSolve 直接调用子域数据准备与 Algebra 求解接口，保留 SGFem 与 Algebra 的职责划分。</p></header>
+ <div class="panel migration"><div class="migration-label"><h3>当前方式</h3><p>临时入口已验证</p></div><div class="migration-flow"><div class="flow-item">Main 临时分支<br>与接口衔接</div><span class="arrow" aria-hidden="true">→</span><div class="flow-item">SGFem<br>准备子域数据</div><span class="arrow" aria-hidden="true">→</span><div class="flow-item algebra">Algebra<br>BDDC 求解</div></div></div>
+ <div class="panel migration future"><div class="migration-label"><h3>正式接入</h3><p>需修改 FEMSolve</p></div><div class="migration-flow"><div class="flow-item">FEMSolve<br>选择求解方式</div><span class="arrow" aria-hidden="true">→</span><div class="flow-item">SGFem<br>准备子域数据</div><span class="arrow" aria-hidden="true">→</span><div class="flow-item algebra">Algebra<br>BDDC 求解</div></div></div>
+ <div class="next-note"><h3>后续工作</h3><p>完成 FEMSolve 的接口衔接后撤去临时入口。<br>结合多算例对照推进 rank 内物理子域细分，记录时间与内存变化。</p></div>
+ <footer><span>SGSim BDDC · 2026.10</span><span>原有求解方式继续保留</span><span>12 / 12</span></footer>
+</section>
+
+</div></main>
+<nav class="controls" aria-label="翻页控制"><button id="previous" aria-label="上一页">← 上一页</button><span class="page-label" id="page" aria-live="polite">1 / 12</span><button id="next" aria-label="下一页">下一页 →</button><select id="slide-picker" aria-label="选择页面"></select><button id="outline-button">目录</button><button id="record-button">运行记录</button><span class="keyboard-hint">← → 翻页 · Home / End</span></nav>
+<div id="progress"></div>
+<dialog id="outline"><div class="dialog-top"><h2>汇报目录</h2><button data-close aria-label="关闭目录">×</button></div><div class="outline-list" id="outline-list"></div></dialog>
+<dialog id="parameter-details" aria-labelledby="parameter-details-title"><div class="dialog-top"><h2 id="parameter-details-title">完整参数说明</h2><button data-close aria-label="关闭参数说明">×</button></div>
+ <table><thead><tr><th scope="col">参数名</th><th scope="col">作用与取舍</th></tr></thead><tbody>
+  <tr><th scope="row"><code>-ksp_type</code></th><td>选择外层 Krylov 方法。CG 要求矩阵与预条件满足对称正定条件。GMRES 用于固定线性预条件，FGMRES 支持变化或非线性预条件。BDDC 并不必然要求使用 FGMRES。</td></tr>
+  <tr><th scope="row"><code>-ksp_rtol</code><br><code>-ksp_max_it</code></th><td>分别控制相对残差收敛容限和迭代上限。残差容限不能直接作为位移或应力误差的度量。</td></tr>
+  <tr><th scope="row"><code>-ksp_gmres_restart</code></th><td>控制重启前的 Krylov 子空间大小。更大的子空间可能改善收敛，同时增加向量存储与每步正交化工作。</td></tr>
+  <tr><th scope="row"><code>-ksp_norm_type</code><br><code>-ksp_pc_side</code></th><td>分别控制收敛检查的残差范数和预条件作用侧。PETSc 的 CG 支持左预条件，GMRES 支持左或右预条件，FGMRES 支持右预条件。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_corner_selection</code></th><td>利用子域面与坐标选择角点。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_edges</code></th><td>控制是否将边约束纳入 primal 空间。边平均属于常见约束形式，具体形式还取决于约束构造配置。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_faces</code></th><td>控制是否将面约束纳入 primal 空间。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_nnsp</code></th><td>控制是否使用矩阵近零空间构造约束。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_use_deluxe_scaling</code></th><td>控制是否使用 Deluxe 界面缩放。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_schur_layers</code></th><td>指定经济型 Deluxe 使用的局部层数。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_deluxe_zerorows</code></th><td>控制是否将 Deluxe 算子中与 primal 自由度对应的行和列置零。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_deluxe_singlemat</code></th><td>控制是否把每个界面分量的 Deluxe 缩放操作合并为一个矩阵。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_levels</code></th><td>设置允许增加的粗层级上限，用于多层 BDDC。rank 内子域组织由分区数据与接口决定。</td></tr>
+  <tr><th scope="row"><code>-pc_bddc_dirichlet_pc_type</code><br><code>-pc_bddc_neumann_pc_type</code></th><td>分别配置局部 Dirichlet 和 Neumann 子问题的预条件类型。LU 采用直接分解，其内存与耗时受稀疏填充影响。</td></tr>
+  <tr><th scope="row"><code>-bddc_factorization_backend</code></th><td>SGSim 自定义统一选项，用于指定分解后端。MUMPS 在 PETSc 中提供 LU 等稀疏直接求解能力。</td></tr>
+  <tr><th scope="row">粗层参数前缀</th><td>粗层 BDDC 参数使用相应粗层前缀，局部子问题参数使用所在层级的求解器前缀。配置应对应目标层级。</td></tr>
+ </tbody></table>
+ <p class="record-note">工程取舍：增加约束会扩大粗问题，更多层级也会改变构建和通信开销。各项设置共同作用，迭代步数减少不保证总耗时或内存下降。</p>
+ <p class="record-note">官方手册：<a href="https://petsc.org/release/manualpages/KSP/KSPCG/" target="_blank" rel="noopener noreferrer">CG</a>、<a href="https://petsc.org/release/manualpages/KSP/KSPGMRES/" target="_blank" rel="noopener noreferrer">GMRES</a>、<a href="https://petsc.org/release/manualpages/KSP/KSPFGMRES/" target="_blank" rel="noopener noreferrer">FGMRES</a>、<a href="https://petsc.org/release/manualpages/KSP/KSPSetTolerances/" target="_blank" rel="noopener noreferrer">收敛容限</a>、<a href="https://petsc.org/release/manualpages/KSP/KSPGMRESSetRestart/" target="_blank" rel="noopener noreferrer">重启周期</a>、<a href="https://petsc.org/main/manualpages/PC/PCBDDC/" target="_blank" rel="noopener noreferrer">BDDC 参数</a>、<a href="https://petsc.org/release/manualpages/PC/PCBDDCSetLevels/" target="_blank" rel="noopener noreferrer">粗层级</a>、<a href="https://petsc.org/release/manualpages/Mat/MATSOLVERMUMPS/" target="_blank" rel="noopener noreferrer">MUMPS 接口</a>。</p>
+</dialog>
+<dialog id="run-record" aria-labelledby="run-record-title"><div class="dialog-top"><h2 id="run-record-title">本轮运行记录与统计口径</h2><button data-close aria-label="关闭运行记录">×</button></div>
+ <h3>BDDC 迭代法</h3>
+ <table><thead><tr><th scope="col">算例</th><th scope="col">方法 / MPI</th><th scope="col">wall / s</th><th scope="col">总 RSS / GiB</th><th scope="col">迭代 / 真实相对残差</th></tr></thead><tbody>
+  <tr data-case="10w-3d"><th scope="row">10w-3d</th><td>CG / 16</td><td>11.738893</td><td>8.786240</td><td>54 / 7.615735552325e-9</td></tr>
+  <tr data-case="100w-mix23d"><th scope="row">100w-mix23d</th><td>CG / 24</td><td>215.198164</td><td>45.744301</td><td>110 / 9.136406889076e-9</td></tr>
+  <tr data-case="100w-mix23d-rbe"><th scope="row">100w-mix23d-rbe</th><td>CG / 24</td><td>218.792352</td><td>44.088619</td><td>109 / 9.896624274378e-9</td></tr>
+  <tr data-case="Pshell_17w_cquad4_Pload2"><th scope="row">17w 壳</th><td>GMRES / 24</td><td>75.767945</td><td>26.108238</td><td>99 / 6.150181148991e-6</td></tr>
+ </tbody></table>
+ <p>四例均正常退出，退出码 0，KSP 报告 CONVERGED_RTOL。壳算例的真实绝对残差为 3.111207369236e-8，KSP 递推残差范数为 5.035713546624e-11。其真实相对残差未达到 1e-8，按用户已接受精度记录。</p>
+ <p>全流程时间为 mpirun 启动至结果输出结束的墙钟时间。总 RSS 峰值采用 1 秒间隔采样，对每个采样时刻的全部 SGFEM 进程 RSS 求和，再取最大值。</p>
+ <p>以下 PCSetUp 与 KSPSolve 采用 PETSc event 的 Max 时间。事件可能嵌套，分别解读，不相加作为全流程总计。</p>
+ <table><thead><tr><th scope="col">算例</th><th scope="col">PCSetUp Max / s</th><th scope="col">KSPSolve Max / s</th></tr></thead><tbody>
+  <tr><th scope="row">10w-3d</th><td>1.3240</td><td>3.1541</td></tr>
+  <tr><th scope="row">100w-mix23d</th><td>80.124</td><td>108.61</td></tr>
+  <tr><th scope="row">100w-mix23d-rbe</th><td>82.370</td><td>109.72</td></tr>
+  <tr><th scope="row">17w 壳</th><td>9.1214</td><td>56.700</td></tr>
+ </tbody></table>
+ <p>BDDC 共同设置：MUMPS 标准 PCLU，levels = 1，rtol = 1e-8，max_it = 500，norm = unpreconditioned，adaptive = 0，nnsp = 0。OMP / MKL / OpenBLAS 均为 1，最细层与粗层采用同类配置。</p>
+ <details><summary>BDDC 记录目录</summary><pre>10w-3d
+/home/hk/SGData/10w-3d/runs/bddc-cg-corners-np16-20261008
+
+100w-mix23d
+/home/hk/SGData/100w-mix23d/runs/bddc-cg-deluxe-edges-np24-20261008
+
+100w-mix23d-rbe
+/home/hk/SGData/100w-mix23d-rbe/runs/bddc-cg-deluxe-edges-np24-20261008
+
+Pshell_17w_cquad4_Pload2
+/home/hk/SGData/Pshell_17w_cquad4_Pload2/runs/bddc-gmres-deluxe-edges-np24-20261008</pre><p class="record-note">各目录保存 console.log、command.txt、wall.txt、memory.txt、rss.tsv 和 exit.txt。</p></details>
+ <h3>CPARDISO 直接法</h3>
+ <p>采用 CPARDISO 直接法求解全局方程。复用原始分区 DB，不传 TSV；OMP / MKL / OpenBLAS 均为 1。2026 年 10 月 8 日测试，10w-3d 复用同日刚完成的成功记录，后三例依次运行。</p>
+ <table id="direct-run-record"><thead><tr><th scope="col">算例 / MPI</th><th scope="col">wall / s</th><th scope="col">总 RSS / GiB</th><th scope="col">退出 / 导出</th></tr></thead><tbody>
+  <tr data-case="10w-3d"><th scope="row">10w-3d / 16</th><td>10.639844</td><td>9.884109</td><td>0 / 成功</td></tr>
+  <tr data-case="100w-mix23d"><th scope="row">100w-mix23d / 24</th><td>101.926730</td><td>57.294384</td><td>0 / 成功</td></tr>
+  <tr data-case="100w-mix23d-rbe"><th scope="row">100w-mix23d-rbe / 24</th><td>98.169485</td><td>60.300865</td><td>0 / 成功</td></tr>
+  <tr data-case="Pshell_17w_cquad4_Pload2"><th scope="row">17w 壳 / 24</th><td>26.442751</td><td>30.696377</td><td>0 / 成功</td></tr>
+ </tbody></table>
+ <p>时间与内存采用上述相同统计口径。直接法未独立计算 ‖b − Ax‖ / ‖b‖，日志中的后向误差输出不替代真实残差验证。退出码 0 与结果导出成功仅表明本次运行正常完成。</p>
+ <details><summary>CPARDISO 记录目录与运行环境</summary><pre>10w-3d
+/home/hk/SGData/10w-3d/runs/cpardiso-direct-np16-20261008
+
+100w-mix23d
+/home/hk/SGData/100w-mix23d/runs/cpardiso-direct-np24-20261008
+
+100w-mix23d-rbe
+/home/hk/SGData/100w-mix23d-rbe/runs/cpardiso-direct-np24-20261008
+
+Pshell_17w_cquad4_Pload2
+/home/hk/SGData/Pshell_17w_cquad4_Pload2/runs/cpardiso-direct-np24-20261008
+
+Release 可执行程序
+/home/hk/code/SGSim/build/release-algebra-intel2025-mumps/bin/SGFEM
+
+运行配置
+solver.conf：LinearReal.Value = CPardiso&lt;Real_t&gt;
+PETSC_DIR = /data/3rdparty/intel32-petsc64-opt-zmo
+Intel MPI 2021.14；Intel MKL 2025.0</pre><p class="record-note">各算例目录保存 console.log、command.txt、wall.txt、memory.txt、rss.tsv 和 exit.txt。构建目录名称含 mumps，本次实际求解器为 CPARDISO。</p></details>
+ <p class="record-note">两批记录的依赖库环境并非完全相同，未完成同环境、同精度的受控性能对照。</p>
+ <p><button class="link-button" data-dialog="previous-record">上一轮 FGMRES 记录</button></p>
+ <p class="record-note">本报告尚未包含新旧位移、反力和应力的逐分量对照。</p>
+</dialog>
+<dialog id="previous-record" aria-labelledby="previous-record-title"><div class="dialog-top"><h2 id="previous-record-title">上一轮 FGMRES 记录</h2><button data-close aria-label="关闭上一轮记录">×</button></div>
+ <table><thead><tr><th scope="col">算例 / MPI</th><th scope="col">迭代</th><th scope="col">真实相对残差</th><th scope="col">全流程 / s</th><th scope="col">总 RSS / GiB</th></tr></thead><tbody>
+  <tr><th scope="row">10w-3d / 16</th><td>21</td><td>7.432981429420e-9</td><td>10.587 *</td><td>未测量</td></tr>
+  <tr><th scope="row">100w-mix23d / 24</th><td>85</td><td>9.123112862450e-9</td><td>198.265313</td><td>47.419243</td></tr>
+  <tr><th scope="row">100w-mix23d-rbe / 24</th><td>86</td><td>7.082772764891e-9</td><td>203.528981</td><td>47.501690</td></tr>
+  <tr><th scope="row">17w 壳 / 24</th><td>99</td><td>6.297421270512e-6</td><td>51.459767</td><td>26.199516</td></tr>
+ </tbody></table>
+ <p>配置：原始数据库，不传 TSV。FGMRES，restart = 100，MUMPS，levels = 1，rtol = 1e-8，max_it = 500，角点、面约束与 Deluxe 启用，nnsp = 0。边约束沿用原配置，未显式指定。</p>
+ <p>17w 壳的上述真实残差对应用户已接受的精度，尚未达到 1e-8 的真实相对残差目标。与本轮比较时需同时考虑 Krylov 方法、界面约束及停止范数的变化。总 RSS 的小幅差异还受采样影响。</p>
+ <p class="record-note">* 10w-3d 的 10.587 s 为程序报告的全流程时间，含结果导出。其余三例使用外部墙钟时间。上一轮 10w 未单独测量总 RSS。</p>
+ <details><summary>上一轮记录目录</summary><pre>10w-3d
+/home/hk/SGData/10w-3d/runs/sgsim-code-algebra-mumps-np16-check-cleanup-20261008
+
+100w-mix23d
+/home/hk/SGData/100w-mix23d/runs/bddc-report-np24-20261008
+
+100w-mix23d-rbe
+/home/hk/SGData/100w-mix23d-rbe/runs/bddc-report-np24-20261008
+
+Pshell_17w_cquad4_Pload2
+/home/hk/SGData/Pshell_17w_cquad4_Pload2/runs/bddc-report-np24-20261008</pre></details>
+ <details><summary>10w-3d 原始记录与残差曲线</summary><p>129,591 阶，5,413,869 非零元。CONVERGED_RTOL，export successful，RUN_EXIT=0。</p><div class="convergence"><h3>上一轮 10w-3d 真实相对残差</h3><svg id="residual-chart" viewBox="0 0 1000 367" role="img" aria-label="上一轮10w-3d第11至21步真实相对残差曲线"></svg><p>展示原日志第 11–21 步，纵轴为对数尺度。</p></div></details>
+</dialog>
+<noscript>请启用 JavaScript 使用翻页与残差图。页面正文已保存在本文件中。</noscript>
+<script>
+"use strict";
+const slides = Array.from(document.querySelectorAll(".slide"));
+const picker = document.getElementById("slide-picker");
+const outlineList = document.getElementById("outline-list");
+let current = 0;
+slides.forEach((slide, index) => {
+  const option = document.createElement("option"); option.value = String(index); option.textContent = `${String(index+1).padStart(2,"0")}  ${slide.dataset.title}`; picker.append(option);
+  const button = document.createElement("button"); const number = document.createElement("b"); number.textContent = String(index+1).padStart(2,"0"); button.append(number,document.createTextNode(slide.dataset.title)); button.addEventListener("click",()=>{document.getElementById("outline").close();show(index);}); outlineList.append(button);
+});
+function show(index, updateHash=true) {
+  current = Math.max(0,Math.min(slides.length-1,index));
+  slides.forEach((slide,i)=>{slide.classList.toggle("active",i===current);slide.setAttribute("aria-hidden",String(i!==current));});
+  picker.value=String(current); document.getElementById("page").textContent=`${current+1} / ${slides.length}`;
+  document.getElementById("previous").disabled=current===0; document.getElementById("next").disabled=current===slides.length-1;
+  document.getElementById("progress").style.width=`${(current+1)/slides.length*100}%`;
+  if(updateHash) history.replaceState(null,"",`#${current+1}`);
+}
+function fit() {
+  const scale = Math.min(window.innerWidth/1600,Math.max(1,window.innerHeight-58)/900);
+  document.getElementById("stage").style.transform=`scale(${scale})`;
+}
+function drawResiduals() {
+  const data=[[11,2.247105810851e-4],[12,1.063177925994e-4],[13,4.867514988386e-5],[14,1.921207586919e-5],[15,7.350345282387e-6],[16,2.317804300360e-6],[17,7.540250058198e-7],[18,2.384245997127e-7],[19,7.795439228044e-8],[20,2.574220145783e-8],[21,7.432981429420e-9]];
+  const svg=document.getElementById("residual-chart"), ns="http://www.w3.org/2000/svg";
+  const left=90,right=955,top=34,bottom=305;
+  const x=step=>left+(step-11)/10*(right-left), y=value=>top+(-3-Math.log10(value))/6*(bottom-top);
+  const element=(tag,attrs,text)=>{const e=document.createElementNS(ns,tag);for(const [key,value] of Object.entries(attrs))e.setAttribute(key,String(value));if(text!==undefined)e.textContent=text;svg.append(e);return e;};
+  const tickLabels={"-3":"10⁻³","-4":"10⁻⁴","-5":"10⁻⁵","-6":"10⁻⁶","-7":"10⁻⁷","-8":"10⁻⁸","-9":"10⁻⁹"};
+  for(let exponent=-3;exponent>=-9;exponent--){const py=y(10**exponent);element("line",{x1:left,y1:py,x2:right,y2:py,stroke:"#e0e8ed","stroke-width":1});element("text",{x:left-18,y:py+6,"text-anchor":"end",fill:"#6c8290","font-size":19},tickLabels[exponent]);}
+  for(let step=11;step<=21;step+=2){element("text",{x:x(step),y:bottom+29,"text-anchor":"middle",fill:"#6c8290","font-size":19},String(step));}
+  element("text",{x:(left+right)/2,y:bottom+57,"text-anchor":"middle",fill:"#6c8290","font-size":19},"迭代步数");
+  element("line",{x1:left,y1:y(1e-8),x2:right,y2:y(1e-8),stroke:"#cc9250","stroke-width":2,"stroke-dasharray":"7 6"});
+  element("text",{x:left+12,y:y(1e-8)-10,fill:"#a6783e","font-size":18},"目标 10⁻⁸");
+  element("polyline",{points:data.map(([step,value])=>`${x(step)},${y(value)}`).join(" "),fill:"none",stroke:"#009a8c","stroke-width":3.7,"stroke-linejoin":"round"});
+  for(const [step,value] of data){const point=element("circle",{cx:x(step),cy:y(value),r:5,fill:"#009a8c",stroke:"#fff","stroke-width":1.8});const title=document.createElementNS(ns,"title");title.textContent=`第 ${step} 步：${value.toExponential(12)}`;point.append(title);}
+}
+document.getElementById("previous").addEventListener("click",()=>show(current-1));
+document.getElementById("next").addEventListener("click",()=>show(current+1));
+picker.addEventListener("change",()=>show(Number(picker.value)));
+document.getElementById("outline-button").addEventListener("click",()=>document.getElementById("outline").showModal());
+document.getElementById("record-button").addEventListener("click",()=>document.getElementById("run-record").showModal());
+document.querySelectorAll("[data-dialog]").forEach(button=>button.addEventListener("click",()=>document.getElementById(button.dataset.dialog).showModal()));
+document.querySelectorAll("[data-close]").forEach(button=>button.addEventListener("click",()=>button.closest("dialog").close()));
+document.addEventListener("keydown",event=>{if(document.querySelector("dialog[open]")||/INPUT|SELECT|TEXTAREA/.test(event.target.tagName))return;if(["ArrowRight","PageDown"," "].includes(event.key)){event.preventDefault();show(current+1);}else if(["ArrowLeft","PageUp"].includes(event.key)){event.preventDefault();show(current-1);}else if(event.key==="Home"){event.preventDefault();show(0);}else if(event.key==="End"){event.preventDefault();show(slides.length-1);}});
+window.addEventListener("resize",fit);
+window.addEventListener("hashchange",()=>{const page=Number(location.hash.slice(1));if(Number.isInteger(page)&&page>=1&&page<=slides.length)show(page-1,false);});
+const initial=Number(location.hash.slice(1));show(Number.isInteger(initial)&&initial>=1&&initial<=slides.length?initial-1:0,false);fit();drawResiduals();
+</script>
+</body>
+</html>
