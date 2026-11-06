@@ -6,13 +6,13 @@ tags:
   - hpc
 status: active
 date_added: 2026-07-20
-date_update: 2026-09-16
+date_update: 2026-10-14
 ---
 
 # HPC 工作安排与任务拆解
 
 > 单一事实来源：研究院 HPC 任务的安排、分工与状态以本文件为准；`heliangos/wechat` 各老师档案只留指针。
-> 来源：2026-07-09 研究院阶段计划讨论 + 2026-07-20 李宁宁部长群内任务发布 + 2026-07-20 算海内部周会 + 2026-07-22 `suanhaitech/houzai` 任务 issues + 2026-07-27 [与李宁宁部长的讨论](../meetings/2026-07-27-liningning-discussion.md) + 2026-07-27 [算海讨论](../meetings/2026-07-27-suanhai-discussion.md) + 2026-07-28 至 2026-07-31 飞书群聊（原文见 [chats/](../chats/README.md)）。
+> 来源：2026-07-09 研究院阶段计划讨论 + 2026-07-20 李宁宁部长群内任务发布 + 2026-07-20 算海内部周会 + 2026-07-22 `suanhaitech/houzai` 任务 issues + 2026-07-27 [与李宁宁部长的讨论](../meetings/2026-07-27-liningning-discussion.md) + 2026-07-27 [算海讨论](../meetings/2026-07-27-suanhai-discussion.md) + 2026-07-28 至 2026-07-31 飞书群聊（原文保留在 Git 历史中，查阅方式见根 log.md 的 2026-10-14 删除记录）。
 
 ## 总体目标
 

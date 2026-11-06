@@ -6,7 +6,7 @@ tags:
   - navigation
 status: in-progress
 date_added: 2026-09-10
-date_update: 2026-09-29
+date_update: 2026-10-14
 ---
 
 # 全库总导航
@@ -28,9 +28,9 @@ date_update: 2026-09-29
 
 | 领域 | 入口与内容 |
 | --- | --- |
+| 研究院人事关系 | [people/README.md](people/README.md)：人员档案、工作职责与协作关系 |
 | 会议纪要 | [meetings/README.md](meetings/README.md)：会议与讨论的会上事实、结论口径与行动项 |
 | 项目报告 | [reports/README.md](reports/README.md)：日报、双周汇报周期文档，以及周期内收到的工作输入材料（摘要与原件指针）与本人任务材料 |
-| 群聊原文 | [chats/README.md](chats/README.md)：飞书群聊逐条原文归档，回答「当时到底说了什么」 |
 | 规范与模板 | [schema/README.md](schema/README.md)：页面归属规范、方法论与模板 |
 
 ## 稳定入口

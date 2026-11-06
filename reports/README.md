@@ -5,7 +5,7 @@ tags:
   - reports
 status: in-progress
 date_added: 2026-07-29
-date_update: 2026-09-29
+date_update: 2026-10-29
 ---
 
 # 项目报告
@@ -35,6 +35,8 @@ date_update: 2026-09-29
 | 03 | 2026-08-17 至 2026-09-04 | 09-04，[纪要](../meetings/2026-09-04-heterogeneous-parallel-third-biweekly.md) | [biweekly-03](daily/biweekly-03-2026-08-17-to-2026-09-04.md) | 4 份 | 无 |
 | 04 | 2026-09-07 至 2026-09-18 | 09-18，[纪要](../meetings/2026-09-18-heterogeneous-parallel-fourth-biweekly.md) | [biweekly-04](daily/biweekly-04-2026-09-07-to-2026-09-18.md) | 7 份 | 1 份 |
 | 05 | 2026-09-19 至 2026-10-02 | 10-09（预定，对外通知未发） | [biweekly-05](biweekly-05-2026-09-19-to-2026-10-09.md) | 7 份 | 无 |
+| 06 | 2026-10-12 至 2026-10-23 | 10-23（按双周制推算，待确认） | [biweekly-06](daily/biweekly-06-2026-10-12-to-2026-10-23.md) | 无 | 无 |
+| 07 | 2026-10-26 至 2026-11-06 | 11-06（按双周制推算，待确认） | [biweekly-07](daily/biweekly-07-2026-10-26-to-2026-11-06.md) | 1 份 | 无 |
 
 三处需要说明的空档，均为事实记录，不作推断补全：
 
@@ -66,6 +68,7 @@ date_update: 2026-09-29
 | 05 | [sgsim-tensorfem-heterogeneous-progress.md](materials/biweekly-05/sgsim-tensorfem-heterogeneous-progress.md) | `SGSim_TensorFem进展汇报.html` | 宋维豪（算海）2026-09-28 发于飞书算海内部群，12 页网页幻灯片「SGSim × TensorFem 异构有限元计算进展」：GPU 路径把数值装配、PETSc CUDA 求解与反力/应力计算留在设备侧，MPI 1/2/4/8 进程经 Partition 与 Service 供数运行；两档 Tet 算例（96,000 与 165,888 个 CTETRA4）上 42 组首轮结果与单进程直接法逐值对照通过，另有五条路径的加速比、并行效率、总时间与 RSS/VmSize/显存对照，附逐组误差表、配置边界与性能原始数据表 | 已成稿；文内未署作者，作者宋维豪，2026-09-28 经用户确认。按用户 2026-09-29 要求，页面只记来源、核心内容与结论摘要和原件指针，不录原文与图片。所引完整技术报告与周期 04 [tensorfem-multi-backend-validation.md](materials/biweekly-04/tensorfem-multi-backend-validation.md) 的关系、本件与第五次双周会宋维豪汇报项的关系**均待确认** |
 | 05 | [mesh-partitioning-scheme-and-tests.md](materials/biweekly-05/mesh-partitioning-scheme-and-tests.md) | `网格分区方案与测试.html` | 陈康（算海）2026-09-28 发于飞书算海内部群，25 页网页幻灯片「问题依赖网格分区｜阶段汇报」（封面标 PHASE 02）：可行域优先的统一数学模型（归属、must-link/cannot-link、原图逐 Part 连通、可加负载与资源容量、分摊 DOF 与局部唯一 DOF 两种口径、接口重复系数、材料混合与 FEM 软依赖代价、`ObjectivePolicy`），METIS 候选＋约束保持搜索＋原模型独立验收的程序流程与三态判定，三个经典模型的单元数均衡基线与 MPC 尖峰成因，MPC 算例 9 个 k × 3 种优先策略的等预算对照与加硬上限后的推荐配置（局部 DOF 优先 · 51 Part · 1.15），以及另 15 个 BDF 中 9 个可运行模型的双线测试（18 份可行结果）与 6 个输入能力阻断 | 已成稿；文内未署作者，作者陈康，2026-09-29 经用户确认。按用户 2026-09-29 要求，页面只记来源、核心内容与结论摘要和原件指针，不录原文与图片。与同周期 [problem-dependent-mesh-partitioning.md](materials/biweekly-05/problem-dependent-mesh-partitioning.md)（09-17 汇报稿）的承接关系、与第五次双周会陈康汇报项的关系**均待确认** |
 | 05 | [sgsim-petsc-bddc-integration-design.md](materials/biweekly-05/sgsim-petsc-bddc-integration-design.md) | `SGSim PETSc BDDC 集成设计.html` | 胡凯（算海）2026-09-29 发于飞书算海内部群，11 页网页幻灯片「SGSim PETSc BDDC 集成设计」：SGSim 现有求解流程与 BDDC 所需数据（全局 $A$、$b$，子域矩阵 $K_i$ 与局部—全局映射 $R_i$、MPI 布局与界面信息），子域矩阵的两种构造方案（从全局矩阵提取并分配共享条目 / 从单元贡献装配并做一致的约束变换）及比较，有限元与代数模块的职责划分（Amat 为全局 $A$、Pmat 为子域 MATIS、KSP/PCBDDC），以及因 FEMSolve 现有接口与源码权限所限先在 Main 增加 BDDC 分支、后续合入 FEMSolve 的接入策略与修改范围 | 对方自标「技术方案讨论稿」，故记 `draft`；文内未署作者，作者胡凯，2026-09-29 经用户确认。按用户 2026-09-29 要求，页面只记来源、核心内容与结论摘要和原件指针，不录原文；原件不入 Git，指针仅本机有效。与周期 03 [preconditioner-integration-design-and-test.md](materials/biweekly-03/preconditioner-integration-design-and-test.md)（接入架构一节自标「待修改」）是否为其修订版、与第五次双周会胡凯汇报项的关系**均待确认** |
+| 07 | [tensorfem-architecture-and-encapsulation.md](materials/biweekly-07/tensorfem-architecture-and-encapsulation.md) | `TensorFem架构与封装改造.html` | 算海产出，原件内嵌生成时间 2026-10-28，2026-10-29 用于本人与算海的讨论；12 页网页幻灯片「TensorFem 异构并行架构：认识、验证与设计建议」：架构认识与四项目标能力（后端可替换、分布可演进、资源可管理、功能可扩展），TensorFem Demo 的运行路径与三个问题（COO 编号展开的表达方式、XTensor / Torch 后端操作规则对齐、分析层与 PETSc 的交接边界），风险与改造重点（Adapter、Mesh / FunctionSpace / 约束职责、后端封装、分区调整），四阶段推进计划与验证安排，下个双周形成正式架构文档并给出初步验证结果的交付目标，以及需与老师共同确认的四项议题 | 原件自标「架构讨论稿」，多页标「待沟通」「范围待评估」，故记 `draft`；文内未署作者，**作者、收到渠道与收到日期待确认**。页面只记来源、核心内容与结论摘要和原件指针，不录原件内嵌的源码路径与代码片段；原件不入 Git，指针仅本机有效 |
 
 ## 本人任务清单
 

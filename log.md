@@ -3,7 +3,7 @@ title: "知识库维护日志"
 type: log
 status: living
 date_added: 2026-09-10
-date_update: 2026-09-29
+date_update: 2026-10-14
 ---
 
 # 知识库维护日志
@@ -147,7 +147,7 @@ date_update: 2026-09-29
 
 **指针改为各目录自治**。此前七处写着「完整口径见 AGENTS.md 的『内容纪律』」，章节删除后指针悬空，改为各目录 `README.md` 自身即事实源，禁写项就地写成自足表述（措辞统一照 [reports/README.md](reports/README.md) 的现成写法）：[hpc/README.md](hpc/README.md)、[meetings/README.md](meetings/README.md)、[structural-dynamics/README.md](structural-dynamics/README.md)、[schema/page-schemas.md](schema/page-schemas.md)、[schema/llm-wiki-methodology.md](schema/llm-wiki-methodology.md) 与 `CLAUDE.md` 两处。`chats/`、`reports/`、`staging/` 三个 `README.md` 本就自足，未动。「跨仓库边界」确认冗余——[README.md](README.md) 的内容去向表已完整覆盖，`staging/README.md` 中 `dut-postdoc` 的归位依据改指该表。
 
-**CLAUDE.md 改为纯导入桩**，仿 `dut-postdoc` 写法，只剩 `@AGENTS.md` 一行加一句说明。原有的 Claude Code 运行时差异按内容归属拆走，不留在工具入口：内网 GitLab 各工具可用的读取通道进 [hpc/environment.md](hpc/environment.md) 3.4（新增，编号取末位以免影响既有小节引用），飞书聊天读取通道进 [chats/README.md](chats/README.md) 新增的「读取通道」节。两处都保留了「AI 不持有、不索取、不代填凭据，不代为登录」的口径。通道差异从自动加载降为按需查阅，代价是可能多试几次失败的通道，不涉及公开发布风险。
+**CLAUDE.md 改为纯导入桩**，仿 `dut-postdoc` 写法，只剩 `@AGENTS.md` 一行加一句说明。原有的 Claude Code 运行时差异按内容归属拆走，不留在工具入口：内网 GitLab 各工具可用的读取通道进 [hpc/environment.md](hpc/environment.md) 3.4（新增，编号取末位以免影响既有小节引用），飞书聊天读取通道进 `chats/README.md`（见 Git 历史） 新增的「读取通道」节。两处都保留了「AI 不持有、不索取、不代填凭据，不代为登录」的口径。通道差异从自动加载降为按需查阅，代价是可能多试几次失败的通道，不涉及公开发布风险。
 
 **「Git」一节经用户明确决定不放回**。原三条为提交前逐条看已暂存 `git diff` 做公开发布检查、附件停下核对权利方授权、`main` 直接提交不开分支，删除后全库无第二份正文，[README.md](README.md) 与 [schema/README.md](schema/README.md) 中论证「安全硬约束必须放在自动加载文件里」的两处表述随之移除。**本仓 Public 且内容涉及单位内部工作，此后没有任何自动加载的提交前检查约束，公开发布检查依赖每次提交时人工在场判断。** 本条记录该状态，不作为已解决事项。
 
@@ -209,7 +209,7 @@ date_update: 2026-09-29
 登记待确认，未自行改动：
 
 - **日报写法分叉**：规范要求每事项展开四项，但 2026-08-24 起实际发出的 11 篇以上日报都改成一事项一句话。已在 [reports/README.md](reports/README.md) 记为待确认，两套写法择一后统一改齐。
-- **`chats/weixin-dut-institute-hpc.md` 归属**：与 [README.md](README.md) 内容去向表「微信原文归 `heliangos/wechat`」冲突，见 [chats/README.md](chats/README.md)。
+- **`chats/weixin-dut-institute-hpc.md` 归属**：与 [README.md](README.md) 内容去向表「微信原文归 `heliangos/wechat`」冲突，见 `chats/README.md`（见 Git 历史）。
 - **`staging/perf-test-analysis.md` 转换状态**：清单曾登记，文件与图片目录均不在仓库内，见 [staging/README.md](staging/README.md)。
 - **`staging/solver-and-environment-review.md` 来源**：文首无来源标注，作者与日期未推断。
 
@@ -240,3 +240,19 @@ date_update: 2026-09-29
 - 删除对不存在的 `drafts/` 的引用（[README.md](README.md) 目录树、[staging/README.md](staging/README.md)）。`hpc/log.md` 中的提及属历史条目，append-only，不改。
 - `staging/` 两个 PascalCase 文件名经 `git mv` 改为 kebab-case（`MPI_Solver_Performance_Comparison.md`、`Solver_and_Environment_Review.md`），确认无入链后再改。
 - [staging/README.md](staging/README.md) 清单表与实际文件对齐：补登三份漏登材料，登记 `perf-test-analysis.md` 缺失。
+
+## [2026-10-14] add | 新增研究院人事关系目录
+
+- 经用户批准，新建 [people/README.md](people/README.md) 作为研究院人员档案入口，首位建档人员为 [陈玉震](people/陈玉震.md)。
+- 陈玉震档案暂仅登记用户提供的姓名；部门、职务、职责与本人工作的关系均标「待确认」。
+- 根 [README.md](README.md) 补充内容去向与目录入口，[index.md](index.md) 登记新领域。
+- 关联检查涵盖新增页面与根导航，并检索全仓陈玉震及人员目录的引用。现有会议纪要、HPC 日志及联系人跨仓指针保留原状。
+- 页面规范 `schema/page-schemas.md` 当前缺失，未能核对模板；本轮沿用现有页面的 frontmatter 与目录索引结构，未补建规范文件。
+
+## [2026-10-14] remove | 删除 chats 群聊原文目录
+
+- 经用户批准，删除 `chats/`，停止在当前工作树维护群聊原文；既有项目事实与结论保留。
+- 删除前确认目录中的四个文件均已纳入 Git，且无未提交修改。原文及原读取通道说明保留在提交 `1ce33b4b06ed62d2cda932f2f005810c3518af48` 中。
+- 查阅原文：`git show 1ce33b4b06ed62d2cda932f2f005810c3518af48:chats/<文件名>`。文件名为 `README.md`、`feishu-dut-suanhai-external.md`、`feishu-dut-suanhai-internal.md`、`weixin-dut-institute-hpc.md`。
+- 清理根 README、总导航、HPC 目录索引、工作计划和会议索引中的当前入口；根维护日志及 HPC 历史日志仅将原文链接改为历史路径说明，保留历史事实与结论。
+- 关联检查范围为全仓文本中的 chats 路径和群聊原文入口；原有 schema 目录缺失问题不在本轮修改范围。

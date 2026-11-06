@@ -6,7 +6,7 @@ tags:
   - task-line
 status: in-progress
 date_added: 2026-07-20
-date_update: 2026-09-16
+date_update: 2026-10-14
 ---
 
 # 任务线 · HPC 求解器性能与多后端并行
@@ -23,7 +23,6 @@ date_update: 2026-09-16
 | 进度 | 本目录 [log.md](log.md)（append-only） |
 | 交付物与归档状态 | 本目录 [artifacts.md](artifacts.md) |
 | 会议纪要 | [../meetings/](../meetings/README.md)，按日期命名 |
-| 群聊原文 | [../chats/](../chats/README.md)；本目录只写结论，不复制逐字聊天 |
 | 算海内部执行过程、任务 issues 与过程产出 | `suanhaitech/houzai`；本目录只记项目状态与指针 |
 | 研究院源码、程序包、模型与内部文档原件 | 研究院 GitLab；本目录只记交付物清单与归档状态 |
 | 可复用技术知识（matrix-free、PETSc 调优、文献） | `dut-postdoc` |

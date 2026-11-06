@@ -11,7 +11,7 @@
 在**大工项目的原始沟通与内部系统**和**我**之间，维护一个持久、结构化、可被 LLM 读写的中间层，使「现在什么状态、当时怎么定的、材料齐不齐」这类问题不必每次重新翻聊天记录和云文档。三层架构：
 
 - **原始源层**：研究院 GitLab、飞书云文档、聊天流与相邻仓库；AI 只读不改，原件不入 Git
-- **Wiki 层**：任务线事实源（`plan` / `log` / `artifacts`）、会议纪要、群聊原文、日报与周期材料
+- **Wiki 层**：任务线事实源（`plan` / `log` / `artifacts`）、会议纪要、日报与周期材料
 - **Schema 层**：`schema/` + 根目录工具入口 + `schema/templates/` 定义页面约定；工具无关的常驻协作规则在 `AGENTS.md`
 
 ## 内容去向
@@ -20,9 +20,9 @@
 
 | 内容 | 去处 |
 | --- | --- |
+| 研究院相关人员的已确认身份、工作职责与协作关系 | 本仓库 `people/`；微信原文与联系人上下文仍归 `heliangos/wechat` |
 | 项目任务、安排、分工、进度、汇报节点、日报、自有项目文档与交付物清单 | 本仓库 |
 | 从工作中沉淀的可复用知识（matrix-free 方法、PETSc 调优经验、文献） | `dut-postdoc` |
-| 大工项目相关飞书群聊原文 | 本仓库 `chats/`；项目结论仍进 `hpc/` |
 | 与老师们的微信沟通原文与联系人上下文 | `heliangos/wechat`；本仓记录项目结论与指针 |
 | 算海团队面向研究院的规范化交付材料（阶段汇报文档、对比测试报告等） | 本仓库 `reports/materials/biweekly-NN/`，按收到日期归入对应汇报周期；收到日期或归属不确定时归入最接近的周期并在材料清单标「待确认」 |
 | 本人承担撰写的对外交付稿及其撰写状态（研究院规划章节、方案稿等） | 本仓库 `reports/my-tasks/biweekly-NN/`，按所属汇报周期归入；正文已在飞书或 GitLab 成立的只留指针，交付事实仍写任务线 `log.md` / `artifacts.md` |
@@ -47,12 +47,14 @@ dut-institute-work/
 │   └── templates/
 ├── hpc/           # 任务线：HPC 求解器性能与多后端并行
 ├── structural-dynamics/  # 任务线：结构动力学软件模块验收
+├── people/        # 研究院人事关系：人员档案、工作职责与协作关系
 ├── meetings/      # 会议与讨论纪要，按 YYYY-MM-DD-主题.md 命名
-├── reports/       # 项目报告：日报、双周汇报周期文档，以及周期内收到的材料（摘要与原件指针）与本人任务材料
-└── chats/         # 飞书群聊原文归档，一群一文件长期累积
+└── reports/       # 项目报告：日报、双周汇报周期文档，以及周期内收到的材料（摘要与原件指针）与本人任务材料
 ```
 
-每个文件夹内的文件清单与内容纪律由该文件夹的 `README.md` 维护，本树不逐个复述：任务线看 [hpc/README.md](hpc/README.md) 与 [structural-dynamics/README.md](structural-dynamics/README.md)，纪要看 [meetings/README.md](meetings/README.md)，报告、周期材料与本人任务材料看 [reports/README.md](reports/README.md)，群聊原文看 [chats/README.md](chats/README.md)，规范与模板看 [schema/README.md](schema/README.md)。
+每个文件夹内的文件清单与内容纪律由该文件夹的 `README.md` 维护，本树不逐个复述：任务线看 [hpc/README.md](hpc/README.md) 与 [structural-dynamics/README.md](structural-dynamics/README.md)，纪要看 [meetings/README.md](meetings/README.md)，报告、周期材料与本人任务材料看 [reports/README.md](reports/README.md)，规范与模板看 [schema/README.md](schema/README.md)。
+
+人员档案入口见 [people/README.md](people/README.md)。
 
 将来研究院分派新的任务线，按 [schema/templates/task-line.md](schema/templates/task-line.md) 在根目录新开一个文件夹，并在本 README 的内容去向表与 [index.md](index.md) 登记。
 
@@ -60,7 +62,7 @@ dut-institute-work/
 
 见 [方法论](schema/llm-wiki-methodology.md)：
 
-- **Ingest**：一次会议 / 一段群聊 / 一份团队交付材料 / 一天工作 → 落成纪要、`chats/` 原文、`reports/` 周期材料或日报，并把结论回写任务线 `plan.md` / `log.md` / `artifacts.md`
+- **Ingest**：一次会议 / 一段群聊 / 一份团队交付材料 / 一天工作 → 落成纪要、`reports/` 周期材料或日报，并把结论回写任务线 `plan.md` / `log.md` / `artifacts.md`
 - **Query**：基于任务线事实源回答项目状态、历史口径与材料缺口，带来源指针；不自动回填页面
 - **Lint**：体检 plan 与 log 是否矛盾、artifacts 是否过期、`reports/` 的材料清单与本人任务清单有没有漏登或过期的行、跨仓库指针是否失效、有没有内容越过 Public 边界
 
@@ -69,7 +71,7 @@ dut-institute-work/
 本仓库同时服务 Claude Code、Codex、Antigravity 等 AI 工具，采用「单一事实源 + 多工具导入桩」架构：
 
 - [AGENTS.md](AGENTS.md) 是**工具无关常驻规则的唯一来源**，Codex、Antigravity 等直接读取。
-- [CLAUDE.md](CLAUDE.md) 只引用 `AGENTS.md`，不含独立规则。各内部系统可用的读取通道按内容归属维护：GitLab 见 [hpc/environment.md](hpc/environment.md) 3.4，飞书见 [chats/README.md](chats/README.md)。
+- [CLAUDE.md](CLAUDE.md) 只引用 `AGENTS.md`，不含独立规则。GitLab 的读取通道见 [hpc/environment.md](hpc/environment.md) 3.4。
 - [schema/page-schemas.md](schema/page-schemas.md) 集中页面归属、属性、索引与存储要求，`schema/templates/` 提供骨架。
 - 各目录「写什么、不写什么」由该目录自己的 `README.md` 维护，内容去向见上文内容去向表；常驻规则里不复述。
 

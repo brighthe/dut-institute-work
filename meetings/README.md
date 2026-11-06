@@ -5,7 +5,7 @@ tags:
   - meetings
 status: in-progress
 date_added: 2026-09-10
-date_update: 2026-09-18
+date_update: 2026-10-14
 ---
 
 # 会议与讨论纪要
@@ -40,6 +40,5 @@ date_update: 2026-09-18
 
 ## 相关链接
 
-- 群聊逐字原文：[../chats/README.md](../chats/README.md)
 - HPC 任务线：[../hpc/README.md](../hpc/README.md)
 - 结构动力学验收任务线：[../structural-dynamics/README.md](../structural-dynamics/README.md)
